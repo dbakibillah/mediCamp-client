@@ -9,6 +9,8 @@ import Root from './routes/Root';
 import AuthProvider from './providers/AuthProviders';
 import ThemeProvider from './providers/ThemeProvider';
 import Home from './pages/home/Home';
+import Login from './pages/common/Login';
+import Registration from './pages/common/Registration';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Registration />,
       }
     ],
   },
