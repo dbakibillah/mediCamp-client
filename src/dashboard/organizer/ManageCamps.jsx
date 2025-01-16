@@ -65,7 +65,7 @@ const ManageCamps = () => {
                     </thead>
                     <tbody>
                         {camps.map((camp, index) => (
-                            <tr key={camp._id}>
+                            <tr key={camp._id} className="hover:bg-gray-200">
                                 <th>{index + 1}</th>
                                 <td>{camp.campName}</td>
                                 <td>{new Date(camp.dateTime).toLocaleString()}</td>
