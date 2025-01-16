@@ -11,6 +11,16 @@ import ThemeProvider from './providers/ThemeProvider';
 import Home from './pages/home/Home';
 import Login from './pages/common/Login';
 import Registration from './pages/common/Registration';
+import CampDetails from './pages/camps/CampDetails';
+
+// tanstackQuery
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import Dashboard from './dashboard/Dashboard';
+
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
@@ -29,17 +39,33 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Registration />,
+      },
+      {
+        path: "/camp-details/:campId",
+        element: <CampDetails />,
       }
     ],
   },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    errorElement: <div>Error</div>,
+    children: [
+      {
+        
+      }
+    ],
+  }
 ]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProvider>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   </StrictMode>,
 )

@@ -6,6 +6,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProviders";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -86,6 +87,9 @@ const Login = () => {
 
     return (
         <section className="bg-base-100 py-36 dark:bg-gray-900">
+            <Helmet>
+                <title>Login | MediCamp</title>
+            </Helmet>
             <div className="card w-full max-w-sm shadow-2xl mx-auto animate__animated animate__bounceInDown animate__slow dark:bg-gray-800">
                 <h2 className="text-3xl font-bold text-center p-5 text-c3 dark:text-white">Login</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="card-body">

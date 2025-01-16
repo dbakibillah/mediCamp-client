@@ -5,9 +5,14 @@ import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProviders";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import {Helmet} from "react-helmet";
 
 const Registration = () => {
+    const img_hosting_key = import.meta.env.VITE_IMG_HOSTING_KEY;
+    const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
     const { createUser, setUser, updateUserProfile, googleSignIn } = useContext(AuthContext);
     const [showPassword, setShowPassword] = useState(false);
@@ -36,7 +41,7 @@ const Registration = () => {
                         await axios.post("http://localhost:5000/users", newUser);
                         Swal.fire({
                             title: "Good job!",
-                            text: "Registration successfully with Google!",
+                            text: "Registration successful with Google!",
                             icon: "success",
                         });
                     }
@@ -60,7 +65,7 @@ const Registration = () => {
     };
 
     const onSubmit = async (data) => {
-        const { name, email, photo, password } = data;
+        const { name, email, password } = data;
 
         try {
             const response = await axios.get(`http://localhost:5000/user?email=${email}`);
@@ -77,16 +82,34 @@ const Registration = () => {
             const result = await createUser(email, password);
             setUser(result.user);
 
-            const newUser = { name, email, photo };
+            const formData = new FormData();
+            formData.append("image", data.photo[0]);
+            const imgResponse = await axiosPublic.post(img_hosting_api, formData);
+
+            if (!imgResponse.data.success) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Image Upload Failed",
+                    text: "Please try again.",
+                });
+                return;
+            }
+
+            const updateUser = {
+                displayName: name,
+                photoURL: imgResponse.data.data.display_url,
+            };
+            await updateUserProfile(updateUser);
+
+            const newUser = { name, email, photo: updateUser.photoURL };
             await axios.post("http://localhost:5000/users", newUser);
+            
+            navigate("/");
             Swal.fire({
                 title: "Good job!",
                 text: "Registration successful!",
                 icon: "success",
             });
-
-            await updateUserProfile({ displayName: name, photoURL: photo });
-            navigate("/");
         } catch (error) {
             console.error("Error during registration:", error);
             Swal.fire({
@@ -99,6 +122,9 @@ const Registration = () => {
 
     return (
         <section className="bg-base-100 p-2 py-10 lg:py-16 dark:bg-gray-900">
+            <Helmet>
+                <title>mediCamp | Registration</title>
+            </Helmet>
             <div className="dark:bg-gray-800 card w-full max-w-sm shadow-2xl mx-auto animate__animated animate__bounceInDown animate__slow dark:text-white">
                 <h2 className="text-3xl font-bold text-center text-c3 mt-4 dark:text-white">Registration</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="card-body">
@@ -133,13 +159,12 @@ const Registration = () => {
 
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text dark:text-white">Photo URL</span>
+                            <span className="label-text dark:text-white">Photo</span>
                         </label>
                         <input
-                            type="text"
-                            placeholder="Photo URL"
-                            className="input input-bordered dark:text-gray-950"
-                            {...register("photo", { required: "Photo URL is required." })}
+                            type="file"
+                            className="file-input file-input-bordered w-full max-w-xs"
+                            {...register("photo", { required: "Photo is required." })}
                         />
                         {errors.photo && <p className="text-red-500 text-sm">{errors.photo.message}</p>}
                     </div>
@@ -174,7 +199,7 @@ const Registration = () => {
 
                     <div className="form-control mt-6">
                         <button type="submit" className="btn bg-blue-600 text-white border-none">
-                            Registration
+                            Register
                         </button>
                     </div>
 

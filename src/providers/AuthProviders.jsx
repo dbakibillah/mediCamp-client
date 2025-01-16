@@ -59,7 +59,7 @@ const AuthProvider = ({ children }) => {
                     withCredentials: true
                 })
                     .then((response) => {
-                        console.log(response.data);
+                        localStorage.setItem("access-token", response.data.token);
                         setLoading(false);
                     })
             }
@@ -68,7 +68,7 @@ const AuthProvider = ({ children }) => {
                     withCredentials: true
                 })
                     .then((response) => {
-                        console.log(response.data);
+                        localStorage.removeItem("access-token");
                         setLoading(false);
                     })
             }

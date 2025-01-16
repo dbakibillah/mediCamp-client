@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Tooltip } from "react-tooltip";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { AuthContext } from "../../providers/AuthProviders";
 import { ThemeContext } from "../../providers/ThemeProvider";
@@ -36,8 +35,8 @@ const Navbar = () => {
     const links = (
         <>
             <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/allblogs">Available Camps</NavLink></li>
-            
+            <li><NavLink to="/availablecamps">Available Camps</NavLink></li>
+
             {user && (
                 <>
                     <li><NavLink to="/addblogs">Add Blog</NavLink></li>
@@ -99,9 +98,6 @@ const Navbar = () => {
                                 >
                                     <div
                                         className="w-12 rounded-full"
-                                        data-tooltip-id="my-tooltip"
-                                        data-tooltip-content={user.displayName || "User"}
-                                        data-tooltip-place="bottom"
                                     >
                                         <img
                                             src={user.photoURL || "https://via.placeholder.com/150"}
@@ -117,6 +113,13 @@ const Navbar = () => {
                                         <span className="font-bold">
                                             Hello, {user.displayName || "User"}!
                                         </span>
+                                    </li>
+                                    <li>
+                                        <button
+                                            className="btn btn-ghost"
+                                        >
+                                            Dashboard
+                                        </button>
                                     </li>
                                     <li>
                                         <button
@@ -145,10 +148,6 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-            <Tooltip
-                id="my-tooltip"
-                style={{ zIndex: 1 }}
-            />
         </section>
     );
 };
