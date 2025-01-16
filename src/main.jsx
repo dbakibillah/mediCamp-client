@@ -21,6 +21,8 @@ import {
 import Dashboard from './dashboard/Dashboard';
 import OrganizerProfile from './dashboard/organizer/OrganizerProfile';
 import AddCamp from './dashboard/organizer/AddCamp';
+import ManageCamps from './dashboard/organizer/ManageCamps';
+import UpdateCamp from './dashboard/organizer/UpdateCamp';
 
 const queryClient = new QueryClient()
 
@@ -60,6 +62,14 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/add-camp",
         element: <AddCamp />,
+      },
+      {
+        path: "/dashboard/manage-camps",
+        element: <ManageCamps />,
+      },
+      {
+        path: "/dashboard/update-camp/:id",
+        element: <UpdateCamp />,
       }
     ],
   }

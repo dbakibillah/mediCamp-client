@@ -47,7 +47,7 @@ const Dashboard = () => {
         </li>
         <li>
             <NavLink
-                to="/manage-camps"
+                to="/dashboard/manage-camps"
                 className={({ isActive }) =>
                     `block px-4 py-2 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
                     }`
