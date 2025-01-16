@@ -20,6 +20,7 @@ import {
 } from '@tanstack/react-query'
 import Dashboard from './dashboard/Dashboard';
 import OrganizerProfile from './dashboard/organizer/OrganizerProfile';
+import AddCamp from './dashboard/organizer/AddCamp';
 
 const queryClient = new QueryClient()
 
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/organizer-profile",
         element: <OrganizerProfile />,
+      },
+      {
+        path: "/dashboard/add-camp",
+        element: <AddCamp />,
       }
     ],
   }
