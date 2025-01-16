@@ -115,11 +115,11 @@ const Navbar = () => {
                                         </span>
                                     </li>
                                     <li>
-                                        <button
+                                        <Link to="/dashboard"
                                             className="btn btn-ghost"
                                         >
                                             Dashboard
-                                        </button>
+                                        </Link>
                                     </li>
                                     <li>
                                         <button

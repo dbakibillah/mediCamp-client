@@ -19,6 +19,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import Dashboard from './dashboard/Dashboard';
+import OrganizerProfile from './dashboard/organizer/OrganizerProfile';
 
 const queryClient = new QueryClient()
 
@@ -52,7 +53,8 @@ const router = createBrowserRouter([
     errorElement: <div>Error</div>,
     children: [
       {
-        
+        path: "/dashboard/organizer-profile",
+        element: <OrganizerProfile />,
       }
     ],
   }
