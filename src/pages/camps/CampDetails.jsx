@@ -95,6 +95,8 @@ const CampDetails = () => {
                 phone: formData.phone,
                 gender: formData.gender,
                 emergencyContact: formData.emergencyContact,
+                paymentStatus: "Unpaid",
+                confirmationStatus: "Pending",
             };
 
             await axiosPublic.post("/joinedParticipant", registrationData);
