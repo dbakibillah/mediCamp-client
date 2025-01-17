@@ -102,7 +102,7 @@ const ManageRegistrations = () => {
                     </thead>
                     <tbody>
                         {camps.map((camp) => (
-                            <tr key={camp._id}>
+                            <tr key={camp._id} className="hover">
                                 <td>{camp.campName}</td>
                                 <td>{camp.fees}</td>
                                 <td>{camp.participantName}</td>

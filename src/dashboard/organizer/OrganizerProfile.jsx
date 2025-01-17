@@ -76,7 +76,7 @@ const OrganizerProfile = () => {
 
     return (
         <section className="container mx-auto lg:px-24 p-6">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-8 dark:text-gray-100">Organizer Profile</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold mb-8 dark:text-gray-100">Profile</h2>
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6">
                 <figure className="lg:w-1/6">
                     <img

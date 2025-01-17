@@ -69,6 +69,53 @@ const Dashboard = () => {
         </li>
     </>
 
+    const participantsLinks = <>
+        <li>
+            <NavLink
+                to="/dashboard/analytics"
+                className={({ isActive }) =>
+                    `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
+                    }`
+                }
+            >
+                Analytics
+            </NavLink>
+        </li>
+        <li>
+            <NavLink
+                to="/dashboard/participant-profile"
+                className={({ isActive }) =>
+                    `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
+                    }`
+                }
+            >
+                Participant Profile
+            </NavLink>
+        </li>
+        <li>
+            <NavLink
+                to="/dashboard/registered-camps"
+                className={({ isActive }) =>
+                    `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
+                    }`
+                }
+            >
+                Registered Camps
+            </NavLink>
+        </li>
+        <li>
+            <NavLink
+                to="/dashboard/payment-history"
+                className={({ isActive }) =>
+                    `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
+                    }`
+                }
+            >
+                Payment History
+            </NavLink>
+        </li>
+    </>
+
     return (
         <section className="bg-gray-100 dark:bg-gray-900 min-h-screen flex flex-col lg:flex-row">
             {/* Sidebar */}
@@ -77,8 +124,7 @@ const Dashboard = () => {
                     <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
                     <nav>
                         <ul className="space-y-2">
-                            {userType === "organizer" && <>
-                                {organizerLinks}</>}
+                            {userType === "organizer" ? organizerLinks : participantsLinks}
                         </ul>
                     </nav>
                     {/* Divider */}
