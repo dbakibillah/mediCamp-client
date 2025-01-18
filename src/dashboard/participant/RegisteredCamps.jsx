@@ -3,6 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../providers/AuthProviders";
 import ReactStars from "react-rating-stars-component";
+import { Link } from "react-router-dom";
 
 const RegisteredCamps = () => {
     const { user } = useContext(AuthContext);
@@ -26,27 +27,6 @@ const RegisteredCamps = () => {
 
         fetchCamps();
     }, [user]);
-
-    const handlePayment = async (camp) => {
-        Swal.fire("Payment", `Redirecting to payment for ${camp.campName}`, "info");
-        try {
-            const { data } = await axios.post(`http://localhost:5000/pay`, {
-                email: user.email,
-                campId: camp._id,
-                amount: camp.fees,
-            });
-            Swal.fire("Payment Successful", `Transaction ID: ${data.transactionId}`, "success");
-            setCamps((prev) =>
-                prev.map((c) =>
-                    c._id === camp._id
-                        ? { ...c, paymentStatus: "Paid", transactionId: data.transactionId }
-                        : c
-                )
-            );
-        } catch (error) {
-            Swal.fire("Error", "Payment failed. Please try again.", "error");
-        }
-    };
 
     const handleCancel = async (camp) => {
         Swal.fire({
@@ -125,12 +105,11 @@ const RegisteredCamps = () => {
                                     {camp.paymentStatus === "Paid" ? (
                                         <span className="text-green-600">Paid</span>
                                     ) : (
-                                        <button
-                                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                            onClick={() => handlePayment(camp)}
-                                        >
-                                            Pay
-                                        </button>
+                                        <Link to={`/dashboard/payment/${camp._id}`}>
+                                            <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                                Pay Now
+                                            </button>
+                                        </Link>
                                     )}
                                 </td>
                                 <td className="border px-4 py-2">{camp.confirmationStatus || "Pending"}</td>

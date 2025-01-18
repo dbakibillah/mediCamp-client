@@ -26,6 +26,7 @@ import UpdateCamp from './dashboard/organizer/UpdateCamp';
 import ManageRegistrations from './dashboard/organizer/ManageRegistrations';
 import Analytics from './dashboard/participant/Analytics';
 import RegisteredCamps from './dashboard/participant/RegisteredCamps';
+import Payment from './payment/Payment';
 
 const queryClient = new QueryClient()
 
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/registered-camps",
         element: <RegisteredCamps />,
+      },
+      {
+        path: "/dashboard/payment/:id",
+        element: <Payment />,
       }
     ],
   }
