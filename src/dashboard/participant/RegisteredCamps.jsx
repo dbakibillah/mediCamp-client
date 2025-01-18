@@ -1,32 +1,30 @@
-import { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { useState, useContext } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../providers/AuthProviders";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const RegisteredCamps = () => {
     const { user } = useContext(AuthContext);
-    const [camps, setCamps] = useState([]);
     const [selectedCamp, setSelectedCamp] = useState(null);
     const [feedback, setFeedback] = useState("");
     const [rating, setRating] = useState(0);
+    const axiosSecure = useAxiosSecure();
 
-    useEffect(() => {
-        const fetchCamps = async () => {
-            try {
-                const response = await axios.get(
-                    `http://localhost:5000/registered-camps/${user?.email}`
-                );
-                setCamps(response.data);
-            } catch (error) {
-                console.error("Error fetching registered camps:", error);
-                Swal.fire("Error", "Failed to fetch registered camps.", "error");
-            }
-        };
-
-        fetchCamps();
-    }, [user]);
+    const { data: camps = [], isLoading, isError, error } = useQuery({
+        queryKey: ["registeredCamps", user?.email],
+        queryFn: async () => {
+            const response = await axiosSecure.get(`/registered-camps/${user?.email}`);
+            return response.data;
+        },
+        enabled: !!user?.email,
+        onError: (err) => {
+            console.error("Error fetching registered camps:", err);
+            Swal.fire("Error", "Failed to fetch registered camps.", "error");
+        },
+    });
 
     const handleCancel = async (camp) => {
         Swal.fire({
@@ -38,7 +36,7 @@ const RegisteredCamps = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await axios.delete(`http://localhost:5000/cancel-registration/${camp._id}`);
+                    await axiosSecure.delete(`/cancel-registration/${camp._id}`);
                     Swal.fire("Cancelled", "Your registration has been cancelled.", "success");
                     setCamps((prev) => prev.filter((c) => c._id !== camp._id));
                 } catch (error) {
@@ -55,27 +53,45 @@ const RegisteredCamps = () => {
     };
 
     const submitFeedback = async () => {
-        if (feedback) {
+        if (feedback && selectedCamp && user) {
             try {
-                await axios.post(`http://localhost:5000/submit-feedback`, {
-                    email: user.email,
+                const response = await axiosSecure.post(`/submit-feedback`, {
                     campId: selectedCamp._id,
+                    email: user.email,
+                    userName: user.displayName,
+                    photoURL: user.photoURL,
                     feedback,
                     rating,
                 });
-                Swal.fire("Thank you!", "Your feedback has been submitted.", "success");
-                setFeedback("");
-                setRating(0);
-                setSelectedCamp(null);
-                const modal = document.getElementById("my_modal_1");
-                if (modal) modal.close();
+
+                if (response.data.success) {
+                    Swal.fire("Thank you!", "Your feedback has been submitted.", "success");
+                    setFeedback("");
+                    setRating(0);
+                    setSelectedCamp(null);
+
+                    const modal = document.getElementById("my_modal_1");
+                    if (modal) modal.close();
+                } else {
+                    Swal.fire("Error", "Failed to submit feedback.", "error");
+                }
             } catch (error) {
+                console.error("Error submitting feedback:", error);
                 Swal.fire("Error", "Failed to submit feedback.", "error");
             }
         }
     };
 
+
     const handleRating = (rate) => setRating(rate);
+
+    if (isLoading) {
+        return <p>Loading registered camps...</p>;
+    }
+
+    if (isError) {
+        return <p className="text-red-500 text-center">Error: {error.message}</p>;
+    }
 
     return (
         <div className="container mx-auto my-10 p-6 bg-gray-100 dark:bg-gray-900 shadow-lg rounded-lg">

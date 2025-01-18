@@ -14,23 +14,30 @@ const Banner = () => {
             >
                 <div>
                     <img
-                        src="https://i.ibb.co/G5KYSZZ/banner-img.webp"
+                        src="https://i.ibb.co.com/JjWw8Nd/b3.png"
                         alt="Slide 1"
-                        className="object-cover w-full h-[600px]"
+                        className="object-cover w-full h-[550px]"
                     />
                 </div>
                 <div>
                     <img
-                        src="https://i.ibb.co/jVy5NBJ/banner5.png"
+                        src="https://i.ibb.co.com/RhHmnGc/b2.png"
                         alt="Slide 2"
-                        className="object-cover w-full h-[600px]"
+                        className="object-cover w-full h-[550px]"
                     />
                 </div>
                 <div>
                     <img
-                        src="https://i.ibb.co/0Z7JKgJ/banner2.jpg"
+                        src="https://i.ibb.co.com/zrkF3F8/b1.png"
                         alt="Slide 3"
-                        className="object-cover w-full h-[600px]"
+                        className="object-cover w-full h-[550px]"
+                    />
+                </div>
+                <div>
+                    <img
+                        src="https://i.ibb.co.com/gggf2f0/b4.png"
+                        alt="Slide 4"
+                        className="object-cover w-full h-[550px]"
                     />
                 </div>
             </Carousel>

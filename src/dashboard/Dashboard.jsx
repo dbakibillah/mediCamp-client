@@ -1,17 +1,19 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
-import axios from "axios";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
     const [userType, setUserType] = useState("");
+    const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserType = async () => {
             try {
                 if (user?.email) {
-                    const response = await axios.get(`http://localhost:5000/user-type?email=${user.email}`);
+                    const response = await axiosSecure.get(`/user-type?email=${user.email}`);
                     setUserType(response.data.type);
                 }
             } catch (error) {
@@ -19,7 +21,10 @@ const Dashboard = () => {
             }
         };
         fetchUserType();
-    }, [user]);
+        {
+            userType === "organizer" ? navigate("/dashboard/organizer-profile") : navigate("/dashboard/analytics");
+        }
+    }, [user, axiosSecure, navigate, userType]);
 
 
     const organizerLinks = <>

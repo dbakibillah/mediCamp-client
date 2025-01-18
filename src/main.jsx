@@ -27,6 +27,7 @@ import ManageRegistrations from './dashboard/organizer/ManageRegistrations';
 import Analytics from './dashboard/participant/Analytics';
 import RegisteredCamps from './dashboard/participant/RegisteredCamps';
 import Payment from './payment/Payment';
+import PaymentHistory from './payment/PaymentHistory';
 
 const queryClient = new QueryClient()
 
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/payment/:id",
         element: <Payment />,
+      },
+      {
+        path: "/dashboard/payment-history",
+        element: <PaymentHistory />,
       }
     ],
   }

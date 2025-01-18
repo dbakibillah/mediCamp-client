@@ -32,7 +32,7 @@ const Payment = () => {
                     </h2>
                     <p className="text-center text-gray-600 mb-4 text-lg font-semibold">Total Fees: ${camp.fees}</p>
                     <Elements stripe={stripePromise}>
-                        <CheckoutForm totalPrice={camp.fees} campId={camp._id} />
+                        <CheckoutForm totalPrice={camp.fees} campId={camp._id} campName={camp.campName} />
                     </Elements>
                 </>
             ) : (

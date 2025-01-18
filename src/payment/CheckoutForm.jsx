@@ -1,11 +1,10 @@
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProviders";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
-const CheckoutForm = ({ totalPrice, campId }) => {
+const CheckoutForm = ({ totalPrice, campId, campName }) => {
     const stripe = useStripe();
     const elements = useElements();
     const { user } = useContext(AuthContext);
@@ -86,6 +85,7 @@ const CheckoutForm = ({ totalPrice, campId }) => {
             await axiosSecure.post("/make-payment", {
                 email: user.email,
                 campId,
+                campName,
                 amount: totalPrice,
                 transactionId: paymentIntent.id,
             });
@@ -126,13 +126,15 @@ const CheckoutForm = ({ totalPrice, campId }) => {
                 }}
             />
             {
-                clientSecret && <button
-                    type="submit"
-                    className="btn btn-primary w-full"
-                    disabled={!stripe || !elements || loading}
-                >
-                    {loading ? "Processing..." : `Pay $${totalPrice}`}
-                </button>
+                clientSecret && (
+                    <button
+                        type="submit"
+                        className={`btn w-full ${transactionId ? "btn-success" : "btn-primary"}`}
+                        disabled={!stripe || !elements || loading || transactionId}
+                    >
+                        {transactionId ? "Paid" : loading ? "Processing..." : `Pay $${totalPrice}`}
+                    </button>
+                )
             }
             {error && <p className="text-red-600">{error}</p>}
             {transactionId && <p className="text-green-600">Transaction ID: {transactionId}</p>}
