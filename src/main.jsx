@@ -58,7 +58,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
-    errorElement: <div>Error</div>,
+    // errorElement: <div>Error</div>,
     children: [
       // Organizer's routes
       {

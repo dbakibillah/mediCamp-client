@@ -1,58 +1,79 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import SearchBar from "../../components/searchBar/searchBar";
 
 const ManageRegistrations = () => {
-    const [camps, setCamps] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
+    const axiosSecure = useAxiosSecure();
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
-    // Fetch all registered camps
-    useEffect(() => {
-        const fetchCamps = async () => {
-            try {
-                const response = await axios.get("http://localhost:5000/participants");
-                setCamps(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error("Error fetching registered camps:", error);
-                Swal.fire("Error", "Failed to load camp data.", "error");
-            }
-        };
+    const { data: camps = [], isLoading, isError, error, refetch } = useQuery({
+        queryKey: ["camps"],
+        queryFn: async () => {
+            const response = await axiosSecure.get("/participants");
+            return response.data;
+        },
+        onError: (err) => {
+            console.error("Error fetching registered camps:", err);
+            Swal.fire("Error", "Failed to load camp data.", "error");
+        },
+        refetchOnWindowFocus: true,
+    });
 
-        fetchCamps();
-    }, []);
+    const filteredCamps = (camps || []).filter((camp) => {
+        const campName = camp.campName || '';
+        const date = camp.date || '';
+        const participantName = camp.participantName || '';
 
-    // Handle confirmation status update
+        return (
+            campName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            date.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            participantName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    });
+
+
+    const totalPages = Math.ceil(filteredCamps.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedCamps = filteredCamps.slice(startIndex, startIndex + itemsPerPage);
+
+    const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+    };
+
     const handleConfirmation = async (id, isPaid) => {
         if (isPaid === "Unpaid") {
             Swal.fire("Participant is not paid yet!", "Only paid registrations can be confirmed.", "error");
             return;
         }
-        Swal.fire({
-            title: "Processing...",
-            text: "Please wait while we confirm the registration.",
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            },
-        });
-
         try {
-            await axios.put(`http://localhost:5000/confirm-registration/${id}`);
-            setCamps((prevCamps) =>
-                prevCamps.map((camp) =>
-                    camp._id === id ? { ...camp, confirmationStatus: "Confirmed" } : camp
-                )
-            );
-            Swal.fire("Success", "Registration confirmed successfully!", "success");
+            await axiosSecure.put(`/confirm-registration/${id}`);
+            Swal.fire({
+                title: "Registration confirmed",
+                text: "The registration has been confirmed.",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            refetch();
         } catch (error) {
             console.error("Error confirming registration:", error);
-            Swal.fire("Error", "Failed to confirm registration.", "error");
+            Swal.fire({
+                title: "Error confirming registration",
+                text: "Failed to confirm registration. Please try again later.",
+                icon: "error",
+                showConfirmButton: false,
+                timer: 3000,
+            });
         }
     };
 
-
-    // Handle cancellation
     const handleCancellation = async (id, isPaid, isConfirmed) => {
         if (isPaid && isConfirmed) {
             Swal.fire("Error", "Cannot cancel a confirmed and paid registration.", "error");
@@ -70,9 +91,9 @@ const ManageRegistrations = () => {
 
         if (result.isConfirmed) {
             try {
-                await axios.delete(`http://localhost:5000/cancel-registration/${id}`);
-                setCamps((prevCamps) => prevCamps.filter((camp) => camp._id !== id));
+                await axiosSecure.delete(`/cancel-registration/${id}`);
                 Swal.fire("Cancelled", "The registration has been canceled.", "success");
+                refetch(); // Refetch to get updated list of camps
             } catch (error) {
                 console.error("Error canceling registration:", error);
                 Swal.fire("Error", "Failed to cancel registration. Please try again later.", "error");
@@ -80,14 +101,18 @@ const ManageRegistrations = () => {
         }
     };
 
-
-    if (loading) {
+    if (isLoading) {
         return <p className="text-center text-lg font-medium">Loading registered camps...</p>;
+    }
+
+    if (isError) {
+        return <p className="text-center text-lg font-medium text-red-500">{error.message}</p>;
     }
 
     return (
         <section className="container mx-auto px-4 py-10">
             <h2 className="text-4xl font-bold text-center mb-6 text-blue-600">Manage Registrations</h2>
+            <SearchBar onSearch={handleSearch} />
             <div className="overflow-x-auto">
                 <table className="table w-full text-center">
                     <thead>
@@ -101,12 +126,14 @@ const ManageRegistrations = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {camps.map((camp) => (
+                        {paginatedCamps.map((camp) => (
                             <tr key={camp._id} className="hover">
                                 <td>{camp.campName}</td>
                                 <td>{camp.fees}</td>
                                 <td>{camp.participantName}</td>
-                                <td className={camp.paymentStatus === "Paid" ? "text-green-500" : "text-red-500"}>
+                                <td
+                                    className={camp.paymentStatus === "Paid" ? "text-green-500" : "text-red-500"}
+                                >
                                     {camp.paymentStatus}
                                 </td>
                                 <td>
@@ -130,9 +157,10 @@ const ManageRegistrations = () => {
                                                 camp.confirmationStatus === "Confirmed"
                                             )
                                         }
-                                        className="btn btn-sm btn-error"
+                                        className="btn btn-sm bg-red-500 text-white"
                                         disabled={
-                                            camp.paymentStatus === "Paid" && camp.confirmationStatus === "Confirmed"
+                                            camp.paymentStatus === "Paid" &&
+                                            camp.confirmationStatus === "Confirmed"
                                         }
                                     >
                                         Cancel
@@ -142,6 +170,20 @@ const ManageRegistrations = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+            <div className="flex justify-center mt-4">
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                        key={index + 1}
+                        className={`mx-1 px-3 py-1 rounded ${currentPage === index + 1
+                            ? "bg-blue-600 text-white"
+                            : "bg-gray-300 text-gray-800"
+                            }`}
+                        onClick={() => handlePageChange(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
             </div>
         </section>
     );

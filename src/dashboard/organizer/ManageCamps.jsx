@@ -1,23 +1,32 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const ManageCamps = () => {
-    const [camps, setCamps] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const axiosSecure = useAxiosSecure();
+    const itemsPerPage = 10;
 
     // Fetch camps created by the organizer
-    useEffect(() => {
-        const fetchCamps = async () => {
-            try {
-                const response = await axios.get("http://localhost:5000/camps");
-                setCamps(response.data);
-            } catch (error) {
-                console.error("Error fetching camps:", error);
-            }
-        };
-        fetchCamps();
-    }, []);
+    const { data: camps = [], isLoading, isError, error, refetch } = useQuery({
+        queryKey: ["camps"],
+        queryFn: async () => {
+            const response = await axiosSecure.get("/camps");
+            return response.data;
+        },
+        onError: (err) => {
+            console.error("Error fetching registered camps:", err);
+            Swal.fire("Error", "Failed to load camp data.", "error");
+        },
+    });
+
+    const totalPages = Math.ceil(camps.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedCamps = camps.slice(startIndex, startIndex + itemsPerPage);
+
+    const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
     // Delete a camp
     const handleDelete = async (campId) => {
@@ -33,10 +42,10 @@ const ManageCamps = () => {
 
         if (confirm.isConfirmed) {
             try {
-                const response = await axios.delete(`http://localhost:5000/delete-camp/${campId}`);
+                const response = await axiosSecure.delete(`/delete-camp/${campId}`);
                 if (response.data.deleted) {
-                    setCamps(camps.filter((camp) => camp._id !== campId));
                     Swal.fire("Deleted!", "The camp has been deleted.", "success");
+                    refetch();
                 } else {
                     Swal.fire("Error!", "Failed to delete the camp.", "error");
                 }
@@ -47,53 +56,72 @@ const ManageCamps = () => {
         }
     };
 
-
     return (
         <section className="container mx-auto px-4 py-10 lg:my-20">
             <div className="overflow-x-auto">
                 <h2 className="text-4xl font-bold text-center mb-6">Manage Camps</h2>
-                <table className="table w-full">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Camp Name</th>
-                            <th>Date & Time</th>
-                            <th>Location</th>
-                            <th>Healthcare Professional</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {camps.map((camp, index) => (
-                            <tr key={camp._id} className="hover:bg-gray-200">
-                                <th>{index + 1}</th>
-                                <td>{camp.campName}</td>
-                                <td>{new Date(camp.dateTime).toLocaleString()}</td>
-                                <td>{camp.location}</td>
-                                <td>{camp.professionalName}</td>
-                                <td>
-                                    <div className="flex gap-2">
-                                        {/* Update Button */}
-                                        <Link to={`/dashboard/update-camp/${camp._id}`}>
-                                            <button className="btn bg-blue-600 text-white">
-                                                Update
-                                            </button>
-                                        </Link>
-                                        {/* Delete Button */}
-                                        <button
-                                            onClick={() => handleDelete(camp._id)}
-                                            className="btn bg-red-600 text-white"
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-                {camps.length === 0 && (
-                    <p className="text-center text-gray-500 mt-6">No camps available to manage.</p>
+                {isLoading && <p className="text-center text-gray-500">Loading camps...</p>}
+                {isError && (
+                    <p className="text-center text-red-500">Error: {error.message}</p>
+                )}
+                {camps.length > 0 && (
+                    <>
+                        <table className="table w-full table-auto border-collapse border border-gray-200 dark:border-gray-700">
+                            <thead>
+                                <tr className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+                                    <th className="border px-4 py-2">#</th>
+                                    <th className="border px-4 py-2">Camp Name</th>
+                                    <th className="border px-4 py-2">Date & Time</th>
+                                    <th className="border px-4 py-2">Location</th>
+                                    <th className="border px-4 py-2">Healthcare Professional</th>
+                                    <th className="border px-4 py-2">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedCamps.map((camp, index) => (
+                                    <tr key={camp._id} className="hover:bg-gray-200 text-gray-800 dark:text-gray-200">
+                                        <th className="border px-4 py-2">{startIndex + index + 1}</th>
+                                        <td className="border px-4 py-2">{camp.name}</td>
+                                        <td className="border px-4 py-2">{new Date(camp.dateTime).toLocaleString()}</td>
+                                        <td className="border px-4 py-2">{camp.location}</td>
+                                        <td className="border px-4 py-2">{camp.healthcareProfessional}</td>
+                                        <td className="border px-4 py-2">
+                                            <div className="flex gap-2">
+                                                <Link to={`/dashboard/update-camp/${camp._id}`}>
+                                                    <button className="btn bg-blue-600 text-white">
+                                                        Update
+                                                    </button>
+                                                </Link>
+                                                <button
+                                                    onClick={() => handleDelete(camp._id)}
+                                                    className="btn bg-red-600 text-white"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {camps.length === 0 && (
+                            <p className="text-center text-gray-500 mt-6">No camps available to manage.</p>
+                        )}
+                        <div className="flex justify-center mt-4">
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <button
+                                    key={index + 1}
+                                    className={`mx-1 px-3 py-1 rounded ${currentPage === index + 1
+                                        ? "bg-blue-600 text-white"
+                                        : "bg-gray-300 text-gray-800"
+                                        }`}
+                                    onClick={() => handlePageChange(index + 1)}
+                                >
+                                    {index + 1}
+                                </button>
+                            ))}
+                        </div>
+                    </>
                 )}
             </div>
         </section>
