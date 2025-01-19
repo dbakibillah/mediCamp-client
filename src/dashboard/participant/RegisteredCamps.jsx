@@ -5,8 +5,10 @@ import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import SearchBar from "../../components/searchBar/searchBar";
 
 const RegisteredCamps = () => {
+    const [searchQuery, setSearchQuery] = useState("");
     const { user } = useContext(AuthContext);
     const [selectedCamp, setSelectedCamp] = useState(null);
     const [feedback, setFeedback] = useState("");
@@ -86,11 +88,29 @@ const RegisteredCamps = () => {
 
     const handleRating = (rate) => setRating(rate);
 
-    const totalPages = Math.ceil(camps.length / itemsPerPage);
+    const filteredCamps = (camps || []).filter((camp) => {
+        const campName = camp.campName || '';
+        const fees = camp.fees || 0;
+        const participantName = camp.participantName || '';
+
+        return (
+            campName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            fees.toString().includes(searchQuery.toLowerCase()) ||
+            participantName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    });
+
+    // Pagination logic
+    const totalPages = Math.ceil(filteredCamps.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedCamps = camps.slice(startIndex, startIndex + itemsPerPage);
+    const paginatedCamps = filteredCamps.slice(startIndex, startIndex + itemsPerPage);
 
     const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+    };
 
     if (isLoading) {
         return <p>Loading registered camps...</p>;
@@ -105,6 +125,7 @@ const RegisteredCamps = () => {
             <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-indigo-400 mb-6">
                 Registered Camps
             </h2>
+            <SearchBar onSearch={handleSearch} />
             {camps.length > 0 ? (
                 <>
                     <table className="w-full table-auto border-collapse border border-gray-200 dark:border-gray-700">

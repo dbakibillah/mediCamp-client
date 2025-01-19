@@ -1,47 +1,60 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../providers/AuthProviders";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import SearchBar from "../components/searchBar/searchBar";
 
 const PaymentHistory = () => {
-    const [paymentHistory, setPaymentHistory] = useState([]);
-    const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-
     const { user } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
 
-    useEffect(() => {
-        const fetchPaymentHistory = async () => {
-            try {
-                const response = await axiosSecure.get(`/payment-history/${user?.email}`);
-                if (response.data.success) {
-                    setPaymentHistory(response.data.data);
-                } else {
-                    setError(response.data.message);
-                }
-            } catch (err) {
-                console.error("Error fetching payment history:", err);
-                setError("Failed to fetch payment history.");
-            }
-        };
+    const { data: paymentHistory = [], isLoading, isError, error, refetch } = useQuery({
+        queryKey: ["paymentHistory", user?.email],
+        queryFn: async () => {
+            const response = await axiosSecure.get(`/payment-history/${user?.email}`);
+            return response.data.data;
+        },
+        enabled: !!user?.email,
+    });
 
-        fetchPaymentHistory();
-    }, [axiosSecure, user?.email]);
+    const filteredHistory = paymentHistory.filter((payment) => {
+        const campName = payment.campName || "";
+        const amount = payment.amount || "";
 
-    const totalPages = Math.ceil(paymentHistory.length / itemsPerPage);
+        return (
+            campName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            amount.toString().includes(searchQuery.toLowerCase())
+        );
+    });
+
+    const totalPages = Math.ceil(filteredHistory.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedHistory = paymentHistory.slice(startIndex, startIndex + itemsPerPage);
+    const paginatedHistory = filteredHistory.slice(startIndex, startIndex + itemsPerPage);
 
     const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+        refetch();
+    };
 
-    if (error) return <p className="text-center text-red-500">{error}</p>;
+    if (isLoading) {
+        return <p className="text-center text-gray-500">Loading payment history...</p>;
+    }
+
+    if (isError) {
+        return <p className="text-center text-red-500">{error.message}</p>;
+    }
 
     return (
         <div className="container mx-auto my-10 p-6 bg-gray-100 dark:bg-gray-900 shadow-lg rounded-lg">
             <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-indigo-400 mb-6">
                 Payment History
             </h2>
+            <SearchBar onSearch={handleSearch} />
             {paymentHistory.length > 0 ? (
                 <>
                     <table className="w-full table-auto border-collapse border border-gray-200 dark:border-gray-700">
@@ -93,8 +106,8 @@ const PaymentHistory = () => {
                             <button
                                 key={index + 1}
                                 className={`mx-1 px-3 py-1 rounded ${currentPage === index + 1
-                                        ? "bg-indigo-600 text-white"
-                                        : "bg-gray-300 text-gray-800"
+                                    ? "bg-indigo-600 text-white"
+                                    : "bg-gray-300 text-gray-800"
                                     }`}
                                 onClick={() => handlePageChange(index + 1)}
                             >

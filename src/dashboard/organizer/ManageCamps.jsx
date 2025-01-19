@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import SearchBar from "../../components/searchBar/searchBar";
 
 const ManageCamps = () => {
+    const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const axiosSecure = useAxiosSecure();
     const itemsPerPage = 10;
@@ -22,11 +24,31 @@ const ManageCamps = () => {
         },
     });
 
-    const totalPages = Math.ceil(camps.length / itemsPerPage);
+    const filteredCamps = (camps || []).filter((camp) => {
+        const campName = camp.name || '';
+        const date = camp.dateTime || '';
+        const location = camp.location || '';
+        const healthcareProfessional = camp.healthcareProfessional || '';
+
+        return (
+            campName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            date.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            healthcareProfessional.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    });
+
+    // Pagination logic
+    const totalPages = Math.ceil(filteredCamps.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedCamps = camps.slice(startIndex, startIndex + itemsPerPage);
+    const paginatedCamps = filteredCamps.slice(startIndex, startIndex + itemsPerPage);
 
     const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        setCurrentPage(1); // Reset to the first page when searching
+    };
 
     // Delete a camp
     const handleDelete = async (campId) => {
@@ -64,6 +86,7 @@ const ManageCamps = () => {
                 {isError && (
                     <p className="text-center text-red-500">Error: {error.message}</p>
                 )}
+                <SearchBar onSearch={handleSearch} />
                 {camps.length > 0 && (
                     <>
                         <table className="table w-full table-auto border-collapse border border-gray-200 dark:border-gray-700">

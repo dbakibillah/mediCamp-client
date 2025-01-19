@@ -8,7 +8,7 @@ const SearchBar = ({ onSearch }) => {
     };
 
     return (
-        <div className="mb-4 flex justify-end items-center">
+        <div className="mb-4 flex justify-end items-center mr-1">
             <input
                 type="text"
                 value={query}
