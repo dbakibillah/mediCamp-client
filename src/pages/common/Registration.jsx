@@ -1,12 +1,11 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProviders";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 const Registration = () => {
     const img_hosting_key = import.meta.env.VITE_IMG_HOSTING_KEY;
@@ -30,7 +29,7 @@ const Registration = () => {
                 };
 
                 try {
-                    const response = await axios.get(`http://localhost:5000/user?email=${user.email}`);
+                    const response = await axiosPublic.get(`/user?email=${user.email}`);
                     if (response.data.exists) {
                         Swal.fire({
                             title: "Welcome back!",
@@ -38,7 +37,7 @@ const Registration = () => {
                             icon: "info",
                         });
                     } else {
-                        await axios.post("http://localhost:5000/users", newUser);
+                        await axiosPublic.post("/users", newUser);
                         Swal.fire({
                             title: "Good job!",
                             text: "Registration successful with Google!",
@@ -68,7 +67,7 @@ const Registration = () => {
         const { name, email, password } = data;
 
         try {
-            const response = await axios.get(`http://localhost:5000/user?email=${email}`);
+            const response = await axiosPublic.get(`/user?email=${email}`);
             if (response.data.exists) {
                 Swal.fire({
                     title: "Already registered!",
@@ -102,8 +101,8 @@ const Registration = () => {
             await updateUserProfile(updateUser);
 
             const newUser = { name, email, photo: updateUser.photoURL };
-            await axios.post("http://localhost:5000/users", newUser);
-            
+            await axiosPublic.post("/users", newUser);
+
             navigate("/");
             Swal.fire({
                 title: "Good job!",

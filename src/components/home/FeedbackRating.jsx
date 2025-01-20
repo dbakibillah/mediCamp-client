@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Loading from "../../pages/common/Loading";
 import ReactStars from "react-stars";
-import Marquee from "react-fast-marquee"; // Importing Marquee
+import Marquee from "react-fast-marquee";
 
 const FeedbackRating = () => {
     const axiosPublic = useAxiosPublic();

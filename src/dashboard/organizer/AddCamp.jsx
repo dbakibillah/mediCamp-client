@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AddCamp = () => {
+    const axiosSecure = useAxiosSecure();
     const img_hosting_key = import.meta.env.VITE_IMG_HOSTING_KEY;
     const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
     const {
@@ -13,7 +14,6 @@ const AddCamp = () => {
     } = useForm();
 
     const onSubmit = async (data) => {
-        // Check if a file is uploaded
         if (!data.photo[0]) {
             Swal.fire({
                 icon: "error",
@@ -23,11 +23,9 @@ const AddCamp = () => {
             return;
         }
 
-        // Prepare form data for image upload
         const formData = new FormData();
         formData.append("image", data.photo[0]);
 
-        // Show loading indicator
         const loading = Swal.fire({
             title: "Uploading...",
             text: "Please wait while we upload your image.",
@@ -40,7 +38,7 @@ const AddCamp = () => {
 
         try {
             // Upload image to ImgBB
-            const imgResponse = await axios.post(img_hosting_api, formData);
+            const imgResponse = await axiosSecure.post(img_hosting_api, formData);
             if (imgResponse.data.success) {
                 const imageUrl = imgResponse.data.data.url;
 
@@ -53,7 +51,7 @@ const AddCamp = () => {
                 delete campData.photo;
 
                 // Save camp data to the server
-                const response = await axios.post("http://localhost:5000/camps", campData);
+                const response = await axiosSecure.post("/camps", campData);
                 Swal.close();
 
                 if (response.data.insertedId) {

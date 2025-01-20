@@ -1,24 +1,26 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./../../hooks/useAxiosPublic";
 
 const PopularCamps = () => {
-    const [camps, setCamps] = useState([]);
     const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchPopularCamps = async () => {
+    const { data: camps = [], isLoading, isError, error, refetch } = useQuery({
+        queryKey: ["/popularCamps"],
+        queryFn: async () => {
             try {
                 const response = await axiosPublic.get("/popularcamps");
-                setCamps(response.data);
+                return response.data;
             } catch (error) {
                 console.error("Error fetching popular camps:", error);
+                throw error;
             }
-        };
+        },
+    })
 
-        fetchPopularCamps();
-    }, [axiosPublic]);
+    if (isLoading) return <p>Loading...</p>;
+    if (isError) return <p>Error fetching popular camps: {error.message}</p>;
 
     return (
         <section className="bg-gray-100 dark:bg-gray-900 container mx-auto lg:px-24 p-6 my-10">

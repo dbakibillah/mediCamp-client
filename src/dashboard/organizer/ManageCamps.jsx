@@ -11,7 +11,6 @@ const ManageCamps = () => {
     const axiosSecure = useAxiosSecure();
     const itemsPerPage = 10;
 
-    // Fetch camps created by the organizer
     const { data: camps = [], isLoading, isError, error, refetch } = useQuery({
         queryKey: ["camps"],
         queryFn: async () => {
@@ -38,7 +37,6 @@ const ManageCamps = () => {
         );
     });
 
-    // Pagination logic
     const totalPages = Math.ceil(filteredCamps.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedCamps = filteredCamps.slice(startIndex, startIndex + itemsPerPage);
@@ -47,7 +45,7 @@ const ManageCamps = () => {
 
     const handleSearch = (query) => {
         setSearchQuery(query);
-        setCurrentPage(1); // Reset to the first page when searching
+        setCurrentPage(1);
     };
 
     // Delete a camp

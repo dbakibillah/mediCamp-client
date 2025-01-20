@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
-import axios from "axios";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const OrganizerProfile = () => {
+    const axiosSecure = useAxiosSecure();
     const { user } = useContext(AuthContext);
     const [isEditing, setIsEditing] = useState(false);
     const [profileData, setProfileData] = useState({
@@ -12,28 +14,23 @@ const OrganizerProfile = () => {
         contact: "",
     });
 
-    useEffect(() => {
-        if (user?.email) {
-            axios
-                .get(`http://localhost:5000/user/${user.email}`)
-                .then((response) => {
-                    if (response.data) {
-                        setProfileData((prev) => ({
-                            ...prev,
-                            contact: response.data.contact || "",
-                        }));
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error fetching user data:", error);
-                    Swal.fire({
-                        icon: "error",
-                        title: "Failed to fetch user data",
-                        text: "Please try again later.",
-                    });
-                });
+    const { data: userData, isLoading, isError } = useQuery({
+        queryKey: ['userData', user?.email],
+        queryFn: async () => {
+            const response = await axiosSecure.get(`/user/${user.email}`);
+            return response.data;
         }
-    }, [user]);
+    });
+    useEffect(() => {
+        if (userData) {
+            setProfileData((prev) => ({
+                ...prev,
+                contact: userData.contact || "",
+            }));
+        }
+    }, [userData]);
+    if (isLoading) return <p>Loading...</p>;
+    if (isError) return <p>Error fetching user data.</p>;
 
     // Handle input change
     const handleChange = (e) => {
@@ -48,7 +45,7 @@ const OrganizerProfile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:5000/user/${user.email}`, profileData);
+            const response = await axiosSecure.put(`/user/${user.email}`, profileData);
             if (response.data.modifiedCount > 0) {
                 Swal.fire({
                     icon: "success",

@@ -1,12 +1,14 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Swal from "sweetalert2";
 import Loading from "../../pages/common/Loading";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const UpdateCamp = () => {
     const { id } = useParams();
+    const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
     const {
         register,
@@ -16,26 +18,29 @@ const UpdateCamp = () => {
     } = useForm();
     const [loading, setLoading] = useState(true);
 
+    const { data: camp, isLoading } = useQuery({
+        queryKey: ["camp", id],
+        queryFn: async () => {
+            const response = await axiosSecure.get(`/camps/${id}`);
+            return response.data;
+        },
+    });
+
     useEffect(() => {
-        const fetchCampDetails = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5000/camps/${id}`);
-                const camp = response.data;
-                Object.entries(camp).forEach(([key, value]) => setValue(key, value));
-                setLoading(false);
-            } catch (error) {
-                console.error("Error fetching camp details:", error);
-                Swal.fire("Error", "Failed to load camp details.", "error");
-                navigate("/dashboard/manage-camps");
-            }
-        };
-        fetchCampDetails();
-    }, [id, setValue, navigate]);
+        if (camp) {
+            Object.entries(camp).forEach(([key, value]) => setValue(key, value));
+            setLoading(false);
+        }
+    }, [camp, setValue]);
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     const onSubmit = async (data) => {
         try {
             const { _id, ...updatedData } = data;
-            await axios.put(`http://localhost:5000/update-camp/${id}`, updatedData);
+            await axiosSecure.put(`/update-camp/${id}`, updatedData);
 
             Swal.fire("Success", "Camp updated successfully!", "success");
             navigate("/dashboard/manage-camps");

@@ -78,6 +78,17 @@ const Dashboard = () => {
                     Manage Registered Camps
                 </NavLink>
             </li>
+            <li>
+                <NavLink
+                    to="/dashboard/manage-feedbacks"
+                    className={({ isActive }) =>
+                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
+                        }`
+                    }
+                >
+                    Manage Feedbacks
+                </NavLink>
+            </li>
         </>
     );
 

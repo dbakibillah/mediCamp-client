@@ -10,13 +10,14 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.init";
-import axios from "axios";
 import Loading from "../pages/common/Loading";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
+    const axiosPublic = useAxiosPublic();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const provider = new GoogleAuthProvider();
@@ -55,7 +56,7 @@ const AuthProvider = ({ children }) => {
 
             if (currentUser?.email) {
                 const user = { email: currentUser.email }
-                axios.post("https://blog-t-server.vercel.app/jwt", user, {
+                axiosPublic.post("/jwt", user, {
                     withCredentials: true
                 })
                     .then((response) => {
@@ -64,7 +65,7 @@ const AuthProvider = ({ children }) => {
                     })
             }
             else {
-                axios.post("https://blog-t-server.vercel.app/logout", {
+                axiosPublic.post("/logout", {
                     withCredentials: true
                 })
                     .then((response) => {

@@ -1,5 +1,3 @@
-import { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import {
     BarChart,
     Bar,
@@ -10,46 +8,52 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import Swal from "sweetalert2";
+import { useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../providers/AuthProviders";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Analytics = () => {
-    const [campData, setCampData] = useState([]);
+    const axiosSecure = useAxiosSecure();
     const { user } = useContext(AuthContext);
-    const [totals, setTotals] = useState({ participants: 0, fees: 0 });
 
-    useEffect(() => {
-        const fetchAnalyticsData = async () => {
-            if (!user?.email) return;
+    const { data: campData = [], isLoading, isError, error } = useQuery({
+        queryKey: ["analytics", user?.email],
+        queryFn: async () => {
+            const response = await axiosSecure.get(`/analytics/${user?.email}`);
+            return response.data;
+        },
+        enabled: !!user?.email, onError: (error) => {
+            Swal.fire("Error", "Failed to load analytics data.", "error");
+            console.error("Error fetching analytics data:", error);
+        },
+    });
+    const totals = campData.reduce(
+        (acc, camp) => {
+            acc.participants += camp.participantCount || 1;
+            acc.fees += camp.fees || 0;
+            return acc;
+        },
+        { participants: 0, fees: 0 }
+    );
 
-            try {
-                const response = await axios.get(
-                    `http://localhost:5000/analytics/${user.email}`
-                );
-                const data = response.data;
-
-                // Calculate totals
-                const totalParticipants = data.reduce(
-                    (sum, camp) => sum + (camp.participantCount || 1),
-                    0
-                );
-                const totalFees = data.reduce(
-                    (sum, camp) => sum + (camp.fees || 0),
-                    0
-                );
-
-                setCampData(data);
-                setTotals({ participants: totalParticipants, fees: totalFees });
-            } catch (error) {
-                console.error("Error fetching analytics data:", error);
-                Swal.fire("Error", "Failed to load analytics data.", "error");
-            }
-        };
-
-        fetchAnalyticsData();
-    }, [user]);
-
-    // Define unique colors for bars
     const colors = ["#4CAF50", "#FF7043", "#42A5F5", "#AB47BC", "#FFCA28", "#26A69A"];
+
+    if (isLoading) {
+        return (
+            <p className="text-center text-gray-500 dark:text-gray-400 text-lg">
+                Loading analytics data...
+            </p>
+        );
+    }
+
+    if (isError) {
+        return (
+            <p className="text-center text-red-500 text-lg">
+                Error loading data: {error.message}
+            </p>
+        );
+    }
 
     return (
         <div className="container mx-auto my-20 p-6 bg-gray-100 dark:bg-gray-900 shadow-lg rounded-lg">
@@ -101,16 +105,8 @@ const Analytics = () => {
                                 dataKey="fees"
                                 barSize={100}
                                 name="Fees (in USD)"
-                                fill={colors[0]}
-                            >
-                                {campData.map((entry, index) => (
-                                    <Bar
-                                        key={`bar-${index}`}
-                                        dataKey="fees"
-                                        
-                                    />
-                                ))}
-                            </Bar>
+                                fill={colors[Math.floor(Math.random() * colors.length)]}
+                            />
                         </BarChart>
                     </ResponsiveContainer>
                     <div className="mt-10">

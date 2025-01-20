@@ -55,14 +55,10 @@ const CheckoutForm = ({ totalPrice, campId, campName }) => {
         setError("");
 
         try {
-            // Step 1: Create Payment Intent
             const { data } = await axiosSecure.post("/create-payment-intent", {
                 amount: totalPrice,
             });
-
             const clientSecret = data.clientSecret;
-
-            // Step 2: Confirm Payment
             const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: card,
@@ -73,7 +69,6 @@ const CheckoutForm = ({ totalPrice, campId, campName }) => {
                 },
             });
 
-
             if (confirmError) {
                 setError(confirmError.message);
                 setLoading(false);
@@ -81,7 +76,6 @@ const CheckoutForm = ({ totalPrice, campId, campName }) => {
             }
             setTransactionId(paymentIntent.id);
 
-            // Step 3: Save Payment Record to Backend
             await axiosSecure.post("/make-payment", {
                 email: user.email,
                 campId,
@@ -89,8 +83,6 @@ const CheckoutForm = ({ totalPrice, campId, campName }) => {
                 amount: totalPrice,
                 transactionId: paymentIntent.id,
             });
-
-            // Step 4: Update Camp Status
             await axiosSecure.put(`/update-payment-status/${campId}`, {
                 email: user.email,
                 paymentStatus: "Paid",
