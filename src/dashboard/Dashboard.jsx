@@ -138,6 +138,17 @@ const Dashboard = () => {
                     Payment History
                 </NavLink>
             </li>
+            <li>
+                <NavLink
+                    to="/dashboard/your-feedback"
+                    className={({ isActive }) =>
+                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
+                        }`
+                    }
+                >
+                    Your Feedback
+                </NavLink>
+            </li>
         </>
     );
 

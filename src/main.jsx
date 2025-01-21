@@ -28,6 +28,7 @@ import Analytics from './dashboard/participant/Analytics';
 import RegisteredCamps from './dashboard/participant/RegisteredCamps';
 import Payment from './payment/Payment';
 import PaymentHistory from './payment/PaymentHistory';
+import YourFeedbacks from './dashboard/participant/YourFeedbacks';
 
 const queryClient = new QueryClient()
 
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/payment-history",
         element: <PaymentHistory />,
+      },
+      {
+        path: "/dashboard/your-feedback",
+        element: <YourFeedbacks />,
       }
     ],
   }

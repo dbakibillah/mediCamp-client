@@ -52,26 +52,36 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-
-            if (currentUser?.email) {
-                const user = { email: currentUser.email }
-                axiosPublic.post("/jwt", user, {
-                    withCredentials: true
-                })
-                    .then((response) => {
-                        localStorage.setItem("access-token", response.data.token);
-                        setLoading(false);
-                    })
-            }
-            else {
-                axiosPublic.post("/logout", {
-                    withCredentials: true
-                })
-                    .then((response) => {
+            if (currentUser) {
+                setUser(currentUser);
+                // Check if the JWT token is already in localStorage
+                const token = localStorage.getItem("access-token");
+                if (token) {
+                    setLoading(false); // Skip axios call if the token is available
+                } else {
+                    const userData = { email: currentUser.email };
+                    axiosPublic.post("/jwt", userData)
+                        .then((response) => {
+                            localStorage.setItem("access-token", response.data.token);
+                            setLoading(false);
+                        })
+                        .catch((error) => {
+                            console.error("Error during JWT request:", error);
+                            setLoading(false);
+                        });
+                }
+            } else {
+                setUser(null);
+                // Log out the user from the server if needed
+                axiosPublic.post("/logout")
+                    .then(() => {
                         localStorage.removeItem("access-token");
                         setLoading(false);
                     })
+                    .catch((error) => {
+                        console.error("Error during logout request:", error);
+                        setLoading(false);
+                    });
             }
         });
 
