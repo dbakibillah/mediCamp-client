@@ -29,6 +29,7 @@ import RegisteredCamps from './dashboard/participant/RegisteredCamps';
 import Payment from './payment/Payment';
 import PaymentHistory from './payment/PaymentHistory';
 import YourFeedbacks from './dashboard/participant/YourFeedbacks';
+import AvailableCamps from './pages/common/AvailableCamps';
 
 const queryClient = new QueryClient()
 
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "/camp-details/:campId",
         element: <CampDetails />,
+      },
+      {
+        path: "/available-camps",
+        element: <AvailableCamps />,
       }
     ],
   },

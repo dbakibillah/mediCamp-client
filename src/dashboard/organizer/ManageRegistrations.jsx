@@ -35,7 +35,6 @@ const ManageRegistrations = () => {
         );
     });
 
-
     const totalPages = Math.ceil(filteredCamps.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedCamps = filteredCamps.slice(startIndex, startIndex + itemsPerPage);
@@ -102,7 +101,7 @@ const ManageRegistrations = () => {
     };
 
     if (isLoading) {
-        return <p className="text-center text-lg font-medium">Loading registered camps...</p>;
+        return <p className="text-center text-lg font-medium text-gray-400">Loading registered camps...</p>;
     }
 
     if (isError) {
@@ -110,45 +109,47 @@ const ManageRegistrations = () => {
     }
 
     return (
-        <section className="container mx-auto px-4 py-10">
+        <section className="container mx-auto px-4 py-10 dark:bg-gray-900">
             <h2 className="text-4xl font-bold text-center mb-6 text-blue-600">Manage Registrations</h2>
-            <SearchBar onSearch={handleSearch} />
+            <div className="flex justify-end mb-6">
+                <SearchBar onSearch={handleSearch} />
+            </div>
             <div className="overflow-x-auto">
-                <table className="table w-full text-center">
+                <table className="table w-full table-auto border-collapse border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
                     <thead>
-                        <tr className="bg-gray-200">
-                            <th>Camp Name</th>
-                            <th>Camp Fees</th>
-                            <th>Participant Name</th>
-                            <th>Payment Status</th>
-                            <th>Confirmation Status</th>
-                            <th>Cancel</th>
+                        <tr className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+                            <th className="border px-6 py-3">Camp Name</th>
+                            <th className="border px-6 py-3">Camp Fees</th>
+                            <th className="border px-6 py-3">Payment Status</th>
+                            <th className="border px-6 py-3">Participant Name</th>
+                            <th className="border px-6 py-3">Confirmation Status</th>
+                            <th className="border px-6 py-3">Cancel</th>
                         </tr>
                     </thead>
                     <tbody>
                         {paginatedCamps.map((camp) => (
-                            <tr key={camp._id} className="hover">
-                                <td>{camp.campName}</td>
-                                <td>{camp.fees}</td>
-                                <td>{camp.participantName}</td>
+                            <tr key={camp._id} className="hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-all">
+                                <td className="border px-6 py-3">{camp.campName}</td>
+                                <td className="border px-6 py-4">{camp.fees}</td>
+                                <td className="border px-6 py-4">{camp.participantName}</td>
                                 <td
                                     className={camp.paymentStatus === "Paid" ? "text-green-500" : "text-red-500"}
                                 >
                                     {camp.paymentStatus}
                                 </td>
-                                <td>
+                                <td className="border px-6 py-4">
                                     {camp.confirmationStatus === "Confirmed" ? (
                                         <span className="text-green-500">Confirmed</span>
                                     ) : (
                                         <button
                                             onClick={() => handleConfirmation(camp._id, camp.paymentStatus)}
-                                            className="btn btn-sm btn-warning"
+                                            className="btn btn-sm bg-yellow-500 text-white border-none"
                                         >
                                             Pending
                                         </button>
                                     )}
                                 </td>
-                                <td>
+                                <td className="border px-6 py-4">
                                     <button
                                         onClick={() =>
                                             handleCancellation(
@@ -157,11 +158,8 @@ const ManageRegistrations = () => {
                                                 camp.confirmationStatus === "Confirmed"
                                             )
                                         }
-                                        className="btn btn-sm bg-red-500 text-white"
-                                        disabled={
-                                            camp.paymentStatus === "Paid" &&
-                                            camp.confirmationStatus === "Confirmed"
-                                        }
+                                        className="btn btn-sm bg-red-500 text-white border-none"
+                                        disabled={camp.paymentStatus === "Paid" && camp.confirmationStatus === "Confirmed"}
                                     >
                                         Cancel
                                     </button>
@@ -177,7 +175,7 @@ const ManageRegistrations = () => {
                         key={index + 1}
                         className={`mx-1 px-3 py-1 rounded ${currentPage === index + 1
                             ? "bg-blue-600 text-white"
-                            : "bg-gray-300 text-gray-800"
+                            : "bg-gray-300 text-gray-800 dark:bg-gray-600 dark:text-gray-200"
                             }`}
                         onClick={() => handlePageChange(index + 1)}
                     >

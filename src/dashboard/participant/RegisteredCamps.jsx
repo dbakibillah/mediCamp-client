@@ -1,11 +1,11 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../providers/AuthProviders";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import SearchBar from "../../components/searchBar/searchBar";
+import SearchBar from "../../components/searchBar/SearchBar";
 
 const RegisteredCamps = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -41,10 +41,22 @@ const RegisteredCamps = () => {
       if (result.isConfirmed) {
         try {
           await axiosSecure.delete(`/cancel-registration/${camp._id}`);
-          Swal.fire("Cancelled", "Your registration has been cancelled.", "success");
+          Swal.fire({
+            title: "Cancelled!",
+            text: "Your registration has been cancelled.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          });
           refetch();
         } catch (error) {
-          Swal.fire("Error", "Failed to cancel registration.", "error");
+          Swal.fire({
+            title: "Error",
+            text: `Failed to cancel registration: ${error.message}`,
+            icon: "error",
+            timer: 2000,
+            showConfirmButton: false,
+          });
         }
       }
     });
@@ -132,7 +144,7 @@ const RegisteredCamps = () => {
       <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-indigo-400 mb-6">
         Registered Camps
       </h2>
-      <SearchBar onSearch={handleSearch} />
+      <div className="mb-6 flex justify-end"><SearchBar onSearch={handleSearch} /></div>
       {camps.length > 0 ? (
         <>
           <table className="w-full table-auto border-collapse border border-gray-200 dark:border-gray-700">

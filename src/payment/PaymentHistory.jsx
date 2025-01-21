@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../providers/AuthProviders";
 import useAxiosSecure from "../hooks/useAxiosSecure";
-import SearchBar from "../components/searchBar/searchBar";
+import SearchBar from "../components/searchBar/SearchBar";
 
 const PaymentHistory = () => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -54,7 +54,9 @@ const PaymentHistory = () => {
             <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-indigo-400 mb-6">
                 Payment History
             </h2>
-            <SearchBar onSearch={handleSearch} />
+            <div className="flex justify-end mb-6">
+                <SearchBar onSearch={handleSearch} />
+            </div>
             {paymentHistory.length > 0 ? (
                 <>
                     <table className="w-full table-auto border-collapse border border-gray-200 dark:border-gray-700">

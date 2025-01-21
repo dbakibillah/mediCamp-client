@@ -1,0 +1,85 @@
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import CampCard from "../../components/common/CampCard";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SearchBar from "../../components/searchBar/SearchBar";
+
+const AvailableCamps = () => {
+    const axiosPublic = useAxiosPublic();
+    const [search, setSearch] = useState("");
+    const [sortBy, setSortBy] = useState("");
+    const [layout, setLayout] = useState("three");
+
+    // Fetch camp data using React Query
+    const { data: camps = [], isLoading, isError } = useQuery({
+        queryKey: ["/camps"],
+        queryFn: async () => {
+            const response = await axiosPublic.get("/camps");
+            return response.data;
+        },
+    });
+
+    // Filter camps based on search input
+    const filteredCamps = camps.filter((camp) =>
+        camp.name.toLowerCase().includes(search.toLowerCase()) ||
+        camp.location.toLowerCase().includes(search.toLowerCase())
+    );
+
+    // Sort camps based on the selected criteria
+    const sortedCamps = [...filteredCamps].sort((a, b) => {
+        if (sortBy === "most-registered") {
+            return b.participantCount - a.participantCount;
+        }
+        if (sortBy === "camp-fees") {
+            return a.fees - b.fees;
+        }
+        if (sortBy === "alphabetical") {
+            return a.name.localeCompare(b.name);
+        }
+        return 0;
+    });
+
+    const toggleLayout = () => setLayout(layout === "three" ? "two" : "three");
+
+    // Loading and error handling
+    if (isLoading) return <p>Loading camps...</p>;
+    if (isError) return <p>Error fetching camps. Please try again later.</p>;
+
+    return (
+        <div className="container mx-auto lg:px-24 p-4 min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white">
+            {/* Controls Section */}
+            <div className="flex justify-end items-center mb-6 gap-4">
+                <SearchBar onSearch={setSearch} />
+                <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="border p-3 rounded-md w-full sm:w-auto shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                >
+                    <option value="">Sort By</option>
+                    <option value="most-registered">Most Registered</option>
+                    <option value="camp-fees">Camp Fees</option>
+                    <option value="alphabetical">Alphabetical Order</option>
+                </select>
+                <button
+                    onClick={toggleLayout}
+                    className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-md shadow-md hover:from-indigo-600 hover:to-blue-500 transition-all w-full sm:w-auto"
+                >
+                    Toggle Layout
+                </button>
+            </div>
+
+            {/* Camps Display Section */}
+            <div
+                className={`grid gap-6 ${
+                    layout === "three" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"
+                }`}
+            >
+                {sortedCamps.map((camp) => (
+                    <CampCard key={camp.id} camp={camp} />
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default AvailableCamps;
