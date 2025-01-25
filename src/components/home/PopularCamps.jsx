@@ -41,7 +41,7 @@ const PopularCamps = () => {
     }
 
     return (
-        <section className="bg-gradient-to-r from-blue-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 py-12">
+        <section className="py-12">
             <div className="container mx-auto lg:px-24 px-6">
                 {/* Title */}
                 <h2 className="text-4xl font-extrabold text-center text-gray-800 dark:text-white mb-12">
@@ -57,7 +57,7 @@ const PopularCamps = () => {
                 <div className="text-center mt-10">
                     <button
                         className="inline-block border-2 border-blue-600 text-blue-600 font-medium text-lg px-6 py-3 rounded-xl shadow-lg hover:bg-gradient-to-r from-blue-500 to-indigo-600 hover:text-white hover:shadow-xl transform transition-all duration-500 ease-in-out"
-                        onClick={() => navigate("/availablecamps")}
+                        onClick={() => navigate("/available-camps")}
                     >
                         See All Camps
                     </button>

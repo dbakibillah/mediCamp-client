@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import CampCard from "../../components/common/CampCard";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import SearchBar from "../../components/searchBar/SearchBar";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const AvailableCamps = () => {
     const axiosPublic = useAxiosPublic();
@@ -10,44 +10,39 @@ const AvailableCamps = () => {
     const [sortBy, setSortBy] = useState("");
     const [layout, setLayout] = useState("three");
 
-    // Fetch camp data using React Query
     const { data: camps = [], isLoading, isError } = useQuery({
         queryKey: ["/camps"],
         queryFn: async () => {
-            const response = await axiosPublic.get("/camps");
+            const response = await axiosPublic.get("/available-camps");
             return response.data;
         },
     });
 
-    // Filter camps based on search input
     const filteredCamps = camps.filter((camp) =>
-        camp.name.toLowerCase().includes(search.toLowerCase()) ||
+        camp.campName.toLowerCase().includes(search.toLowerCase()) ||
         camp.location.toLowerCase().includes(search.toLowerCase())
     );
 
-    // Sort camps based on the selected criteria
     const sortedCamps = [...filteredCamps].sort((a, b) => {
         if (sortBy === "most-registered") {
             return b.participantCount - a.participantCount;
         }
         if (sortBy === "camp-fees") {
-            return a.fees - b.fees;
+            return parseFloat(a.fees) - parseFloat(b.fees);
         }
         if (sortBy === "alphabetical") {
-            return a.name.localeCompare(b.name);
+            return a.campName.localeCompare(b.campName);
         }
         return 0;
     });
 
     const toggleLayout = () => setLayout(layout === "three" ? "two" : "three");
 
-    // Loading and error handling
     if (isLoading) return <p>Loading camps...</p>;
     if (isError) return <p>Error fetching camps. Please try again later.</p>;
 
     return (
         <div className="container mx-auto lg:px-24 p-4 min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white">
-            {/* Controls Section */}
             <div className="flex justify-end items-center mb-6 gap-4">
                 <SearchBar onSearch={setSearch} />
                 <select
@@ -70,12 +65,10 @@ const AvailableCamps = () => {
 
             {/* Camps Display Section */}
             <div
-                className={`grid gap-6 ${
-                    layout === "three" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"
-                }`}
+                className={`grid gap-6 ${layout === "three" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"}`}
             >
                 {sortedCamps.map((camp) => (
-                    <CampCard key={camp.id} camp={camp} />
+                    <CampCard key={camp._id} camp={camp} />
                 ))}
             </div>
         </div>

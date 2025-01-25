@@ -30,14 +30,13 @@ import Payment from './payment/Payment';
 import PaymentHistory from './payment/PaymentHistory';
 import YourFeedbacks from './dashboard/participant/YourFeedbacks';
 import AvailableCamps from './pages/common/AvailableCamps';
-
+import ManageFeedback from './dashboard/organizer/ManageFeedback';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    errorElement: <div>Error</div>,
     children: [
       {
         path: "/",
@@ -86,6 +85,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/manage-registrations",
         element: <ManageRegistrations />,
+      },
+      {
+        path: "/dashboard/manage-feedbacks",
+        element: <ManageFeedback />,
       },
       // Participant's route
       {

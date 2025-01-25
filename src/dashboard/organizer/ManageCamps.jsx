@@ -103,10 +103,10 @@ const ManageCamps = () => {
                                 {paginatedCamps.map((camp, index) => (
                                     <tr key={camp._id} className="hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-all">
                                         <th className="border px-6 py-4">{startIndex + index + 1}</th>
-                                        <td className="border px-6 py-4">{camp.name}</td>
+                                        <td className="border px-6 py-4">{camp.campName}</td>
                                         <td className="border px-6 py-4">{new Date(camp.dateTime).toLocaleString()}</td>
                                         <td className="border px-6 py-4">{camp.location}</td>
-                                        <td className="border px-6 py-4">{camp.healthcareProfessional}</td>
+                                        <td className="border px-6 py-4">{camp.professionalName}</td>
                                         <td className="border px-6 py-4">
                                             <div className="flex gap-3 justify-center">
                                                 <Link to={`/dashboard/update-camp/${camp._id}`}>

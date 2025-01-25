@@ -1,0 +1,135 @@
+[
+    {
+      "_id": "67952f784e7e67d90cbec1a5",
+      "campName": "Free Medical Camp",
+      "fees": "500",
+      "location": "Dhaka",
+      "dateTime": "2025-01-30T05:37",
+      "professionalName": "Dr Asad Rubel",
+      "description": "This Free Medical Camp aims to provide essential medical services to underserved communities. Participants will receive free consultations, basic health check-ups, and medical advice. Our team of professional doctors will be on-site to guide individuals on improving their overall health and well-being, offering solutions for common ailments and preventative care.",
+      "image": "https://i.ibb.co.com/T2sBM55/free-medical-camp.jpg",
+      "participantCount": 0
+    },
+    {
+      "_id": "67952f784e7e67d90cbec1a6",
+      "campName": "Eye Care Camp",
+      "fees": "300",
+      "location": "Chittagong",
+      "dateTime": "2025-02-15T09:00",
+      "professionalName": "Dr. Ayesha Sultana",
+      "description": "Our Eye Care Camp offers free eye screenings and consultations by trained ophthalmologists. We will provide vision tests, detect potential eye diseases, and offer corrective eyewear to individuals in need. Additionally, this camp aims to raise awareness about common eye conditions and how to prevent vision loss.",
+      "image": "https://i.ibb.co.com/T2sBM55/eye-care-camp.jpg",
+      "participantCount": 0
+    },
+    {
+      "_id": "67952f784e7e67d90cbec1a7",
+      "campName": "Diabetes Awareness Camp",
+      "fees": "0",
+      "location": "Sylhet",
+      "dateTime": "2025-03-10T11:00",
+      "professionalName": "Dr. Imran Hasan",
+      "description": "The Diabetes Awareness Camp focuses on educating the public about the prevention, management, and treatment of diabetes. This camp will provide free blood sugar testing, nutritional guidance, and expert consultations. Participants will learn about lifestyle changes, healthy habits, and the importance of early diagnosis in managing diabetes effectively.",
+      "image": "https://i.ibb.co.com/T2sBM55/diabetes-camp.jpg",
+      "participantCount": 0
+    },
+    {
+      "_id": "67952f784e7e67d90cbec1a8",
+      "campName": "Free Blood Donation Camp",
+      "fees": "0",
+      "location": "Rajshahi",
+      "dateTime": "2025-04-01T07:00",
+      "professionalName": "Dr. Farhana Karim",
+      "description": "This Free Blood Donation Camp aims to collect much-needed blood for local hospitals and medical centers. All participants will undergo health screening and receive free consultations on maintaining a healthy lifestyle. Blood donation is a vital service that can save lives, and we encourage everyone to participate and help those in need.",
+      "image": "https://i.ibb.co.com/T2sBM55/blood-donation-camp.jpg",
+      "participantCount": 0
+    },
+    {
+      "_id": "67952f784e7e67d90cbec1a9",
+      "campName": "Dental Health Camp",
+      "fees": "200",
+      "location": "Khulna",
+      "dateTime": "2025-04-20T08:00",
+      "professionalName": "Dr. Nazim Uddin",
+      "description": "The Dental Health Camp focuses on providing free dental check-ups, cleanings, and treatments to individuals of all ages. This camp will offer professional advice on maintaining good oral hygiene, preventing common dental problems, and treating existing conditions. We aim to spread awareness about the importance of oral health in overall well-being.",
+      "image": "https://i.ibb.co.com/T2sBM55/dental-camp.jpg",
+      "participantCount": 0
+    },
+    {
+      "_id": "67952f784e7e67d90cbec1b0",
+      "campName": "Mental Health Awareness Camp",
+      "fees": "0",
+      "location": "Mymensingh",
+      "dateTime": "2025-05-01T10:30",
+      "professionalName": "Dr. Sara Binte",
+      "description": "This camp will focus on promoting mental health awareness and providing resources for individuals struggling with mental health challenges. Services include counseling, mental health screenings, and discussions on coping mechanisms, stress management, and emotional well-being. Our goal is to break the stigma around mental health and encourage open conversations.",
+      "image": "https://i.ibb.co.com/T2sBM55/mental-health-camp.jpg",
+      "participantCount": 0
+    },
+    {
+      "_id": "67952f784e7e67d90cbec1b1",
+      "campName": "Free Vaccination Camp",
+      "fees": "0",
+      "location": "Barisal",
+      "dateTime": "2025-06-10T09:00",
+      "professionalName": "Dr. Shahinur Rahman",
+      "description": "The Free Vaccination Camp aims to provide essential vaccinations to individuals, including flu shots, COVID-19 vaccinations, and others as necessary. Our medical professionals will offer guidance on the importance of vaccines in preventing serious diseases and improving public health, especially in underprivileged communities.",
+      "image": "https://i.ibb.co.com/T2sBM55/vaccination-camp.jpg",
+      "participantCount": 0
+    },
+    {
+      "_id": "67952f784e7e67d90cbec1b2",
+      "campName": "Blood Pressure Monitoring Camp",
+      "fees": "0",
+      "location": "Jessore",
+      "dateTime": "2025-07-05T06:30",
+      "professionalName": "Dr. Selina Begum",
+      "description": "Our Blood Pressure Monitoring Camp offers free blood pressure tests and consultations to identify risks of hypertension and related conditions. We aim to raise awareness about managing blood pressure through diet, exercise, and regular check-ups to prevent heart disease and stroke.",
+      "image": "https://i.ibb.co.com/T2sBM55/blood-pressure-camp.jpg",
+      "participantCount": 0
+    },
+    {
+      "_id": "67952f784e7e67d90cbec1b3",
+      "campName": "Child Health Camp",
+      "fees": "150",
+      "location": "Narsingdi",
+      "dateTime": "2025-07-25T08:00",
+      "professionalName": "Dr. Rina Parveen",
+      "description": "The Child Health Camp focuses on providing comprehensive health check-ups for children, including growth monitoring, nutritional guidance, and immunization. Our goal is to ensure children receive the care they need to thrive physically and emotionally, with special attention given to early diagnosis of potential health concerns.",
+      "image": "https://i.ibb.co.com/T2sBM55/child-health-camp.jpg",
+      "participantCount": 0
+    },
+    {
+      "_id": "67952f784e7e67d90cbec1b4",
+      "campName": "Women Health Camp",
+      "fees": "250",
+      "location": "Tangail",
+      "dateTime": "2025-08-14T09:00",
+      "professionalName": "Dr. Nafisa Akter",
+      "description": "This Women Health Camp will focus on women’s health issues, offering free screenings for breast cancer, cervical cancer, reproductive health, and other common concerns. We aim to empower women to take charge of their health by offering preventive care and support in a comfortable, welcoming environment.",
+      "image": "https://i.ibb.co.com/T2sBM55/women-health-camp.jpg",
+      "participantCount": 0
+    },
+    {
+      "_id": "67952f784e7e67d90cbec1b5",
+      "campName": "Emergency Health Camp",
+      "fees": "0",
+      "location": "Comilla",
+      "dateTime": "2025-09-01T06:00",
+      "professionalName": "Dr. Khaled Hossain",
+      "description": "The Emergency Health Camp is designed to provide urgent medical assistance, first aid, and basic treatment for emergencies. Whether it's an accident, sudden illness, or minor injuries, our trained professionals are ready to provide immediate care and support in critical situations.",
+      "image": "https://i.ibb.co.com/T2sBM55/emergency-camp.jpg",
+      "participantCount": 0
+    },
+    {
+      "_id": "67952f784e7e67d90cbec1b6",
+      "campName": "Cancer Awareness Camp",
+      "fees": "0",
+      "location": "Rajbari",
+      "dateTime": "2025-09-20T10:30",
+      "professionalName": "Dr. Mashiur Rahman",
+      "description": "The Cancer Awareness Camp aims to educate individuals on the early signs of cancer, prevention methods, and the importance of regular screenings. We will provide free cancer screenings for common types of cancer, as well as expert consultations on cancer prevention, treatment options, and lifestyle choices to reduce cancer risk.",
+      "image": "https://i.ibb.co.com/T2sBM55/cancer-awareness-camp.jpg",
+      "participantCount": 0
+    }
+  ]
+  

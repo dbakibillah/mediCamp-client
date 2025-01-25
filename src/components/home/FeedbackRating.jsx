@@ -24,27 +24,29 @@ const FeedbackRating = () => {
     }
 
     if (feedbacks.length === 0) {
-        return <p className="text-center text-gray-500">No feedback available yet.</p>;
+        return <p className="text-center text-gray-500 dark:text-gray-400">No feedback available yet.</p>;
     }
 
     return (
-        <div className="container mx-auto lg:px-24 p-4">
-            <h2 className="text-3xl font-semibold text-center mb-6">What Participants Say</h2>
+        <div className="container mx-auto lg:px-24 my-20 p-4">
+            <h2 className="text-4xl font-bold text-center mb-6 text-gray-800 dark:text-gray-200">
+                What Participants Say
+            </h2>
 
             <Marquee className="overflow-hidden" pauseOnHover={true}>
                 <div className="flex">
                     {feedbacks.map((feedback) => (
                         <div
                             key={feedback._id}
-                            className="w-80 border p-2 shadow-md rounded-lg flex flex-col items-center hover:shadow-xl transition duration-300 mx-2"
+                            className="w-80 border p-2 shadow-md rounded-lg flex flex-col items-center hover:shadow-xl transition duration-300 mx-2 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200"
                         >
                             <figure className="my-4">
                                 <img src={feedback.photoURL} alt="" className="w-20 h-20 rounded-full" />
                             </figure>
-                            <h3 className="text-xl font-semibold text-blue-600 mb-2">
+                            <h3 className="text-xl font-semibold text-blue-600 mb-2 dark:text-blue-400">
                                 {feedback.userName}
                             </h3>
-                            <p className="text-gray-800">{feedback.feedback}</p>
+                            <p className="text-gray-800 dark:text-gray-300">{feedback.feedback}</p>
 
                             <div className="mt-2">
                                 <ReactStars
@@ -56,7 +58,7 @@ const FeedbackRating = () => {
                                 />
                             </div>
 
-                            <p className="text-gray-500 text-xs mt-2">
+                            <p className="text-gray-500 text-xs mt-2 dark:text-gray-400">
                                 {new Date(feedback.date).toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'short',

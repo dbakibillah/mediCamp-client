@@ -21,6 +21,7 @@ const OrganizerProfile = () => {
             return response.data;
         }
     });
+
     useEffect(() => {
         if (userData) {
             setProfileData((prev) => ({
@@ -29,6 +30,7 @@ const OrganizerProfile = () => {
             }));
         }
     }, [userData]);
+
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error fetching user data.</p>;
 
@@ -73,24 +75,26 @@ const OrganizerProfile = () => {
 
     return (
         <section className="container mx-auto lg:px-24 p-6">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-8 dark:text-gray-100">Profile</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold mb-8 text-gray-800 dark:text-gray-100">Profile</h2>
+
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6">
                 <figure className="lg:w-1/6">
                     <img
                         src={profileData.photoURL}
                         alt="Profile"
-                        className="w-full rounded-full object-cover border"
+                        className="w-full rounded-full object-cover border-2 border-gray-300"
                     />
                 </figure>
-                <div className="flex flex-col gap-4 p-6 lg:w-3/6">
+
+                <div className="flex flex-col gap-6 p-6 lg:w-3/6">
                     {!isEditing ? (
                         <div className="lg:w-full space-y-3">
-                            <h2 className="text-2xl font-semibold dark:text-gray-100">Name: {profileData.name}</h2>
-                            <p className="text-lg dark:text-gray-300">Email: {user?.email || "N/A"}</p>
-                            <p className="text-lg dark:text-gray-300">Contact: {profileData.contact || "N/A"}</p>
+                            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">Name: {profileData.name}</h2>
+                            <p className="text-lg text-gray-600 dark:text-gray-300">Email: {user?.email || "N/A"}</p>
+                            <p className="text-lg text-gray-600 dark:text-gray-300">Contact: {profileData.contact || "N/A"}</p>
                             <button
                                 onClick={() => setIsEditing(true)}
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                                className="btn border-none bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:bg-gradient-to-l transition-all ease-in-out duration-300"
                             >
                                 Update Profile
                             </button>
@@ -98,46 +102,46 @@ const OrganizerProfile = () => {
                     ) : (
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                             <div>
-                                <label className="block text-sm font-medium dark:text-gray-300">Name</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
                                 <input
                                     type="text"
                                     name="name"
                                     value={profileData.name}
                                     onChange={handleChange}
-                                    className="w-full p-2 rounded-lg border dark:bg-gray-800 dark:text-gray-100"
+                                    className="w-full p-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium dark:text-gray-300">Photo URL</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Photo URL</label>
                                 <input
                                     type="text"
                                     name="photoURL"
                                     value={profileData.photoURL}
                                     onChange={handleChange}
-                                    className="w-full p-2 rounded-lg border dark:bg-gray-800 dark:text-gray-100"
+                                    className="w-full p-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium dark:text-gray-300">Contact</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Contact</label>
                                 <input
                                     type="text"
                                     name="contact"
                                     value={profileData.contact}
                                     onChange={handleChange}
-                                    className="w-full p-2 rounded-lg border dark:bg-gray-800 dark:text-gray-100"
+                                    className="w-full p-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
-                            <div className="flex gap-4">
+                            <div className="flex gap-4 mt-6">
                                 <button
                                     type="submit"
-                                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+                                    className="btn bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:bg-gradient-to-l transition-all ease-in-out duration-300 border-none"
                                 >
                                     Save Changes
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => setIsEditing(false)}
-                                    className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+                                    className="btn bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg hover:bg-gradient-to-l transition-all ease-in-out duration-300 border-none"
                                 >
                                     Cancel
                                 </button>

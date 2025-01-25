@@ -38,7 +38,7 @@ const UpcomingEvents = () => {
                             className="p-4 flex flex-col justify-between rounded-lg shadow-lg dark:bg-gray-800 dark:text-gray-100"
                         >
                             <div>
-                                <h3 className="text-2xl font-semibold mb-2">{event.name}</h3>
+                                <h3 className="text-2xl font-semibold mb-2">{event.campName}</h3>
                                 <p className="text-gray-600 dark:text-gray-300 mb-2">
                                     {event.description
                                         ? `${event.description.slice(0, 100)}...`

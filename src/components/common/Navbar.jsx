@@ -5,7 +5,6 @@ import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { AuthContext } from "../../providers/AuthProviders";
 import { ThemeContext } from "../../providers/ThemeProvider";
 
-
 const Navbar = () => {
     const { user, signOutUser } = useContext(AuthContext);
     const { darkMode, setDarkMode } = useContext(ThemeContext);
@@ -34,8 +33,8 @@ const Navbar = () => {
 
     const links = (
         <>
-            <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/available-camps">Available Camps</NavLink></li>
+            <li><NavLink to="/" className="text-black dark:text-gray-200">Home</NavLink></li>
+            <li><NavLink to="/available-camps" className="text-black dark:text-gray-200">Available Camps</NavLink></li>
         </>
     );
 
@@ -66,13 +65,13 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                            className="menu menu-sm dropdown-content bg-base-100 dark:bg-gray-800 rounded-box z-[1] mt-3 w-52 p-2 shadow"
                         >
                             {links}
                         </ul>
                     </div>
 
-                    <Link to="/" className="btn btn-ghost normal-case text-xl text-blue-600">
+                    <Link to="/" className="btn btn-ghost normal-case text-xl text-blue-600 dark:text-blue-400">
                         mediCamp
                     </Link>
                 </div>
@@ -89,9 +88,7 @@ const Navbar = () => {
                                     tabIndex={0}
                                     className="btn btn-ghost btn-circle avatar"
                                 >
-                                    <div
-                                        className="w-12 rounded-full"
-                                    >
+                                    <div className="w-12 rounded-full">
                                         <img
                                             src={user.photoURL || "https://via.placeholder.com/150"}
                                             alt="User Avatar"
@@ -100,7 +97,7 @@ const Navbar = () => {
                                 </label>
                                 <ul
                                     tabIndex={0}
-                                    className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow z-10"
+                                    className="menu menu-sm dropdown-content bg-base-100 dark:bg-gray-800 rounded-box mt-3 w-52 p-2 shadow z-10"
                                 >
                                     <li>
                                         <span className="font-bold">
@@ -109,7 +106,7 @@ const Navbar = () => {
                                     </li>
                                     <li>
                                         <Link to="/dashboard"
-                                            className="btn btn-ghost"
+                                            className="btn btn-ghost text-black dark:text-gray-200 dark:hover:bg-gray-700"
                                         >
                                             Dashboard
                                         </Link>
@@ -117,7 +114,7 @@ const Navbar = () => {
                                     <li>
                                         <button
                                             onClick={handleLogout}
-                                            className="btn btn-ghost"
+                                            className="btn btn-ghost text-black dark:text-gray-200 dark:hover:bg-gray-700"
                                         >
                                             Log Out
                                         </button>
@@ -126,7 +123,7 @@ const Navbar = () => {
                             </div>
                         ) : (
                             <span className="flex gap-2">
-                                <Link to="/login" className="btn btn-ghost">
+                                <Link to="/login" className="btn btn-ghost text-black dark:text-gray-200">
                                     Join Us
                                 </Link>
                             </span>
@@ -134,7 +131,7 @@ const Navbar = () => {
                         <div>
                             <button onClick={handleToggleDarkMode} className="btn btn-ghost btn-circle btn-sm">
                                 {
-                                    darkMode ? <MdOutlineLightMode className="text-xl" /> : <MdOutlineDarkMode className="text-xl" />
+                                    darkMode ? <MdOutlineLightMode className="text-xl text-yellow-400" /> : <MdOutlineDarkMode className="text-xl text-gray-800" />
                                 }
                             </button>
                         </div>

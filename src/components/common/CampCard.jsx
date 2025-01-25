@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const CampCard = ({ camp }) => {
-    const { id, name, image, dateTime, location, healthcareProfessional, participantCount, description, fees } = camp;
+    const { _id, campName, image, dateTime, location, professionalName, participantCount, description, fees } = camp;
 
     return (
         <div className="flex flex-col justify-between rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 hover:shadow-xl transition-shadow duration-300">
@@ -14,7 +14,7 @@ const CampCard = ({ camp }) => {
                     className="w-full h-48 object-cover rounded-t-md mb-4"
                 />
                 {/* Title */}
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">{name}</h3>
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">{campName}</h3>
                 {/* Details */}
                 <div className="text-sm text-gray-600 dark:text-gray-300 space-y-1 mb-4">
                     <p>
@@ -26,7 +26,7 @@ const CampCard = ({ camp }) => {
                     </p>
                     <p>
                         <strong className="text-gray-800 dark:text-gray-100">Healthcare Professional:</strong>{" "}
-                        {healthcareProfessional}
+                        {professionalName}
                     </p>
                     <p>
                         <strong className="text-gray-800 dark:text-gray-100">Camp Fees:</strong> ${fees}
@@ -42,7 +42,7 @@ const CampCard = ({ camp }) => {
             </div>
             {/* View Details Button */}
             <Link
-                to={`/camp-details/${id}`}
+                to={`/camp-details/${_id}`}
                 className="block bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-center py-3 rounded-lg shadow-md hover:from-indigo-600 hover:to-blue-500 transition-all duration-300"
             >
                 View Details

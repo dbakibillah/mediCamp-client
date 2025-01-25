@@ -91,11 +91,23 @@ const ManageRegistrations = () => {
         if (result.isConfirmed) {
             try {
                 await axiosSecure.delete(`/cancel-registration/${id}`);
-                Swal.fire("Cancelled", "The registration has been canceled.", "success");
+                Swal.fire({
+                    title: "Registration canceled",
+                    text: "The registration has been canceled.",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
                 refetch(); // Refetch to get updated list of camps
             } catch (error) {
                 console.error("Error canceling registration:", error);
-                Swal.fire("Error", "Failed to cancel registration. Please try again later.", "error");
+                Swal.fire({
+                    title: "Error canceling registration",
+                    text: "Failed to cancel registration. Please try again later.",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 3000,
+                });
             }
         }
     };
@@ -110,7 +122,7 @@ const ManageRegistrations = () => {
 
     return (
         <section className="container mx-auto px-4 py-10 dark:bg-gray-900">
-            <h2 className="text-4xl font-bold text-center mb-6 text-blue-600">Manage Registrations</h2>
+            <h2 className="text-4xl font-bold text-center mb-6 text-blue-600">Manage Registered Camps</h2>
             <div className="flex justify-end mb-6">
                 <SearchBar onSearch={handleSearch} />
             </div>
