@@ -132,8 +132,8 @@ const ManageRegistrations = () => {
                         <tr className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
                             <th className="border px-6 py-3">Camp Name</th>
                             <th className="border px-6 py-3">Camp Fees</th>
-                            <th className="border px-6 py-3">Payment Status</th>
                             <th className="border px-6 py-3">Participant Name</th>
+                            <th className="border px-6 py-3">Payment Status</th>
                             <th className="border px-6 py-3">Confirmation Status</th>
                             <th className="border px-6 py-3">Cancel</th>
                         </tr>
