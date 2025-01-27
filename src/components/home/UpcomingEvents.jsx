@@ -29,13 +29,13 @@ const UpcomingEvents = () => {
 
     return (
         <section className="container mx-auto lg:px-24 px-6 py-12">
-            <h2 className="text-4xl font-bold mb-6 text-center">Upcoming Events</h2>
+            <h2 className="text-4xl font-bold mb-6 text-center dark:text-white">Upcoming Events</h2>
             {events.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {events.map((event) => (
                         <div
                             key={event._id}
-                            className="p-4 flex flex-col justify-between rounded-lg shadow-lg dark:bg-gray-800 dark:text-gray-100"
+                            className="p-4 flex flex-col justify-between rounded-lg shadow-lg dark:bg-gray-800 dark:text-gray-100 dark:shadow-gray-900"
                         >
                             <div>
                                 <h3 className="text-2xl font-semibold mb-2">{event.campName}</h3>

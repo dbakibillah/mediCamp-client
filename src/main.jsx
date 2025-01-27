@@ -31,6 +31,7 @@ import PaymentHistory from './payment/PaymentHistory';
 import YourFeedbacks from './dashboard/participant/YourFeedbacks';
 import AvailableCamps from './pages/common/AvailableCamps';
 import ManageFeedback from './dashboard/organizer/ManageFeedback';
+import PrivateRoute from './routes/PrivateRoute';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/camp-details/:campId",
-        element: <CampDetails />,
+        element: <PrivateRoute><CampDetails /></PrivateRoute>,
       },
       {
         path: "/available-camps",

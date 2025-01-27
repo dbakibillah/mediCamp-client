@@ -31,8 +31,8 @@ const OrganizerProfile = () => {
         }
     }, [userData]);
 
-    if (isLoading) return <p>Loading...</p>;
-    if (isError) return <p>Error fetching user data.</p>;
+    if (isLoading) return <p className="text-center text-lg">Loading...</p>;
+    if (isError) return <p className="text-center text-lg text-red-500">Error fetching user data.</p>;
 
     // Handle input change
     const handleChange = (e) => {
@@ -75,18 +75,18 @@ const OrganizerProfile = () => {
 
     return (
         <section className="container mx-auto lg:px-24 p-6">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-8 text-gray-800 dark:text-gray-100">Profile</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold mb-8 text-gray-800 dark:text-gray-100">Organizer Profile</h2>
 
-            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6">
-                <figure className="lg:w-1/6">
+            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+                <figure className="lg:w-1/6 flex justify-center">
                     <img
                         src={profileData.photoURL}
                         alt="Profile"
-                        className="w-full rounded-full object-cover border-2 border-gray-300"
+                        className="w-56 h-56 rounded-full object-cover border-4 border-gray-300 shadow-lg"
                     />
                 </figure>
 
-                <div className="flex flex-col gap-6 p-6 lg:w-3/6">
+                <div className="flex flex-col gap-6 p-6 lg:w-3/6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
                     {!isEditing ? (
                         <div className="lg:w-full space-y-3">
                             <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">Name: {profileData.name}</h2>
@@ -96,7 +96,7 @@ const OrganizerProfile = () => {
                                 onClick={() => setIsEditing(true)}
                                 className="btn border-none bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:bg-gradient-to-l transition-all ease-in-out duration-300"
                             >
-                                Update Profile
+                                Edit Profile
                             </button>
                         </div>
                     ) : (
@@ -108,7 +108,7 @@ const OrganizerProfile = () => {
                                     name="name"
                                     value={profileData.name}
                                     onChange={handleChange}
-                                    className="w-full p-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-3 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
                             <div>
@@ -118,7 +118,7 @@ const OrganizerProfile = () => {
                                     name="photoURL"
                                     value={profileData.photoURL}
                                     onChange={handleChange}
-                                    className="w-full p-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-3 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
                             <div>
@@ -128,7 +128,7 @@ const OrganizerProfile = () => {
                                     name="contact"
                                     value={profileData.contact}
                                     onChange={handleChange}
-                                    className="w-full p-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-3 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
                             <div className="flex gap-4 mt-6">

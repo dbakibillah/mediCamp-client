@@ -11,7 +11,7 @@ const Payment = () => {
     const { id } = useParams();
     const axiosSecure = useAxiosSecure();
 
-    const { data: camp = [], isLoading, isError, error, refetch } = useQuery({
+    const { data: camp = [], isLoading, isError, error } = useQuery({
         queryKey: ["payment", id],
         queryFn: async () => {
             const response = await axiosSecure.get(`/payment/${id}`);
@@ -24,26 +24,37 @@ const Payment = () => {
     });
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900">
+                <div className="text-gray-700 dark:text-gray-300 text-lg">Loading...</div>
+            </div>
+        );
     }
+
     if (isError) {
-        return <p className="text-center text-red-500 mb-6">Error fetching camp details: {error.message}</p>;
+        return (
+            <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900">
+                <p className="text-center text-red-500 text-lg">Error fetching camp details: {error.message}</p>
+            </div>
+        );
     }
 
     return (
-        <div className="container mx-auto my-10 p-6 bg-gray-100 shadow-lg rounded-lg lg:w-1/2">
+        <div className="container mx-auto my-10 p-6 bg-white dark:bg-gray-800 shadow-xl rounded-lg lg:w-1/2">
             {camp ? (
                 <>
-                    <h2 className="text-2xl font-bold text-center mb-6">
+                    <h2 className="text-3xl font-semibold text-center text-gray-800 dark:text-gray-100 mb-6">
                         Payment for {camp.campName}
                     </h2>
-                    <p className="text-center text-gray-600 mb-4 text-lg font-semibold">Total Fees: ${camp.fees}</p>
+                    <p className="text-center text-gray-600 dark:text-gray-300 mb-6 text-lg font-semibold">
+                        Total Fees: <span className="text-xl font-bold text-blue-600">${camp.fees}</span>
+                    </p>
                     <Elements stripe={stripePromise}>
                         <CheckoutForm totalPrice={camp.fees} campId={camp._id} campName={camp.campName} />
                     </Elements>
                 </>
             ) : (
-                <p className="text-center">Loading...</p>
+                <p className="text-center text-gray-500 dark:text-gray-400">Camp details are loading...</p>
             )}
         </div>
     );

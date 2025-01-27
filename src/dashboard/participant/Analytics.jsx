@@ -30,8 +30,8 @@ const Analytics = () => {
     });
     const totals = campData.reduce(
         (acc, camp) => {
-            acc.participants += camp.participantCount || 1;
-            acc.fees += camp.fees || 0;
+            acc.participants += parseInt(camp.participantCount) || 1;
+            acc.fees += parseFloat(camp.fees) || 0;
             return acc;
         },
         { participants: 0, fees: 0 }
@@ -56,26 +56,26 @@ const Analytics = () => {
     }
 
     return (
-        <div className="container mx-auto my-20 p-6 bg-gray-100 dark:bg-gray-900 shadow-lg rounded-lg">
+        <div className="container mx-auto my-20 p-6 shadow-lg rounded-lg">
             <h2 className="text-center text-3xl font-bold mb-8 text-indigo-600 dark:text-indigo-400">
                 Analytics for {user?.displayName || "Participant"}
             </h2>
             {campData.length > 0 ? (
                 <>
                     <div className="grid grid-cols-2 gap-6 mb-10">
-                        <div className="p-4 bg-indigo-200 dark:bg-indigo-800 rounded-lg shadow">
-                            <h3 className="text-xl font-semibold text-indigo-800 dark:text-indigo-300">
+                        <div className="p-4 bg-gradient-to-tr from-indigo-600 to-indigo-800 rounded-lg shadow">
+                            <h3 className="text-xl font-semibold text-white">
                                 Total Joined Camps
                             </h3>
-                            <p className="text-3xl font-bold text-indigo-900 dark:text-indigo-100">
+                            <p className="text-3xl font-bold text-white">
                                 {totals.participants}
                             </p>
                         </div>
-                        <div className="p-4 bg-green-200 dark:bg-green-800 rounded-lg shadow">
-                            <h3 className="text-xl font-semibold text-green-800 dark:text-green-300">
+                        <div className="p-4 bg-gradient-to-tr from-green-600 to-green-800 rounded-lg shadow">
+                            <h3 className="text-xl font-semibold text-white">
                                 Total Fees
                             </h3>
-                            <p className="text-3xl font-bold text-green-900 dark:text-green-100">
+                            <p className="text-3xl font-bold text-white">
                                 ${totals.fees}
                             </p>
                         </div>
@@ -113,7 +113,7 @@ const Analytics = () => {
                         <h3 className="text-lg font-bold text-gray-700 dark:text-gray-300 mb-4">
                             Camp Details:
                         </h3>
-                        <ul className="space-y-6">
+                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {campData.map((camp, index) => (
                                 <li
                                     key={index}

@@ -134,7 +134,7 @@ const Registration = () => {
                         <input
                             type="text"
                             placeholder="Name"
-                            className="input input-bordered dark:text-gray-950"
+                            className="input input-bordered dark:text-gray-100 dark:bg-gray-700"
                             {...register("name", { required: "Name is required." })}
                         />
                         {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
@@ -147,7 +147,7 @@ const Registration = () => {
                         <input
                             type="email"
                             placeholder="Email"
-                            className="input input-bordered dark:text-gray-950"
+                            className="input input-bordered dark:text-gray-100 dark:bg-gray-700"
                             {...register("email", {
                                 required: "Email is required.",
                                 pattern: { value: /^\S+@\S+$/i, message: "Invalid email format." },
@@ -162,7 +162,7 @@ const Registration = () => {
                         </label>
                         <input
                             type="file"
-                            className="file-input file-input-bordered w-full max-w-xs"
+                            className="file-input file-input-bordered w-full max-w-xs dark:bg-gray-700 dark:text-gray-100"
                             {...register("photo", { required: "Photo is required." })}
                         />
                         {errors.photo && <p className="text-red-500 text-sm">{errors.photo.message}</p>}
@@ -176,7 +176,7 @@ const Registration = () => {
                             <input
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Password"
-                                className="input input-bordered w-full dark:text-gray-950"
+                                className="input input-bordered w-full dark:text-gray-100 dark:bg-gray-700"
                                 {...register("password", {
                                     required: "Password is required.",
                                     minLength: { value: 6, message: "Password must be at least 6 characters." },
@@ -197,7 +197,7 @@ const Registration = () => {
                     </div>
 
                     <div className="form-control mt-6">
-                        <button type="submit" className="btn bg-blue-600 text-white border-none">
+                        <button type="submit" className="btn bg-gradient-to-r from-blue-600 to-blue-800 hover:bg-gradient-to-l text-white border-none">
                             Register
                         </button>
                     </div>
@@ -206,7 +206,7 @@ const Registration = () => {
                         <button
                             onClick={handleGoogleSignIn}
                             type="button"
-                            className="btn w-full flex items-center gap-3 bg-white border text-black hover:bg-gray-200"
+                            className="btn w-full flex items-center gap-3 bg-gradient-to-r from-gray-100 to-gray-300 hover:bg-gradient-to-l text-black hover:bg-gray-200"
                         >
                             <img
                                 src="https://i.ibb.co/WnqDNrk/google.png"
@@ -220,7 +220,7 @@ const Registration = () => {
                     <div className="mt-2">
                         <p className="text-center text-sm">
                             Already have an account?{" "}
-                            <Link to="/login" className="link link-hover text-c2 font-bold">
+                            <Link to="/login" className="link link-hover text-c2 font-bold text-blue-600">
                                 Login
                             </Link>
                         </p>

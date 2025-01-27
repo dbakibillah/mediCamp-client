@@ -3,7 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 
 const Banner = () => {
     return (
-        <section className="overflow-x-hidden bg-gray-100 dark:bg-gray-900 container mx-auto lg:px-24">
+        <section className="overflow-x-hidden container mx-auto lg:px-24">
             <Carousel
                 showThumbs={false}
                 showStatus={false}

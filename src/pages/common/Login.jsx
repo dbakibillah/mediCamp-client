@@ -101,7 +101,7 @@ const Login = () => {
                             {...register("email", { required: "Email is required" })}
                             type="email"
                             placeholder="Email"
-                            className="input input-bordered"
+                            className="input input-bordered dark:bg-gray-700 dark:text-gray-100"
                         />
                         {errors.email && (
                             <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -123,7 +123,7 @@ const Login = () => {
                                 })}
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Password"
-                                className="input input-bordered w-full"
+                                className="input input-bordered w-full dark:bg-gray-700 dark:text-gray-100"
                             />
                             <span
                                 onClick={() => setShowPassword(!showPassword)}
@@ -138,7 +138,7 @@ const Login = () => {
                     </div>
 
                     <div className="form-control mt-6">
-                        <button type="submit" className="btn bg-blue-600 text-white border-none">
+                        <button type="submit" className="btn bg-gradient-to-r from-blue-600 to-blue-800 hover:bg-gradient-to-l text-white border-none">
                             Login
                         </button>
                     </div>
@@ -147,7 +147,7 @@ const Login = () => {
                         <button
                             onClick={handleGoogleSignIn}
                             type="button"
-                            className="btn w-full flex items-center gap-3 bg-white border text-black hover:bg-gray-200"
+                            className="btn w-full flex items-center gap-3 bg-gradient-to-r from-gray-100 to-gray-300 hover:bg-gradient-to-l text-black hover:bg-gray-200"
                         >
                             <img
                                 src="https://i.ibb.co/WnqDNrk/google.png"
@@ -161,7 +161,7 @@ const Login = () => {
                     <div className="mt-4 text-center dark:text-white">
                         <p className="text-sm">
                             Don&apos;t have an account?{" "}
-                            <Link to="/register" className="link link-hover text-c2 font-bold">
+                            <Link to="/register" className="link link-hover text-c2 font-bold text-blue-600">
                                 Register
                             </Link>
                         </p>

@@ -140,7 +140,7 @@ const RegisteredCamps = () => {
   }
 
   return (
-    <div className="container mx-auto my-10 p-6 bg-gray-100 dark:bg-gray-900 shadow-lg rounded-lg">
+    <div className="container mx-auto my-10 p-6 shadow-lg rounded-lg">
       <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-indigo-400 mb-6">
         Registered Camps
       </h2>

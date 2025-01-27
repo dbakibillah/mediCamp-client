@@ -56,19 +56,19 @@ const UpdateCamp = () => {
 
     return (
         <section className="container mx-auto px-4 py-10 lg:my-20">
-            <div className="max-w-2xl mx-auto bg-base-100 shadow-xl rounded-lg p-8">
+            <div className="max-w-2xl mx-auto bg-base-100 dark:bg-gray-800 shadow-xl rounded-lg p-8">
                 <h2 className="text-4xl font-bold text-center mb-8 text-blue-600">Update Camp</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     {/* Camp Name */}
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text font-semibold">Camp Name</span>
+                            <span className="label-text font-semibold dark:text-white">Camp Name</span>
                         </label>
                         <input
                             type="text"
                             placeholder="Enter camp name"
                             {...register("campName", { required: "Camp name is required" })}
-                            className="input input-bordered w-full"
+                            className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
                         />
                         {errors.campName && (
                             <span className="text-error text-sm">{errors.campName.message}</span>
@@ -79,7 +79,7 @@ const UpdateCamp = () => {
                         {/* Camp Fees */}
                         <div className="form-control flex-1">
                             <label className="label">
-                                <span className="label-text font-semibold">Camp Fees</span>
+                                <span className="label-text font-semibold dark:text-white">Camp Fees</span>
                             </label>
                             <input
                                 type="number"
@@ -88,7 +88,7 @@ const UpdateCamp = () => {
                                     required: "Camp fees are required",
                                     min: { value: 0, message: "Fees cannot be negative" },
                                 })}
-                                className="input input-bordered w-full"
+                                className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
                             />
                             {errors.fees && (
                                 <span className="text-error text-sm">{errors.fees.message}</span>
@@ -98,11 +98,11 @@ const UpdateCamp = () => {
                         {/* Image URL */}
                         <div className="form-control flex-1">
                             <label className="label">
-                                <span className="label-text font-semibold">Photo</span>
+                                <span className="label-text font-semibold dark:text-white">Photo</span>
                             </label>
                             <input
                                 type="file"
-                                className="file-input file-input-bordered w-full"
+                                className="file-input file-input-bordered w-full dark:bg-gray-700 dark:text-white"
                                 {...register("photo", { required: "Photo is required" })}
                             />
                             {errors.photo && (
@@ -115,13 +115,13 @@ const UpdateCamp = () => {
                         {/* Location */}
                         <div className="form-control flex-1">
                             <label className="label">
-                                <span className="label-text font-semibold">Location</span>
+                                <span className="label-text font-semibold dark:text-white">Location</span>
                             </label>
                             <input
                                 type="text"
                                 placeholder="Enter camp location"
                                 {...register("location", { required: "Location is required" })}
-                                className="input input-bordered w-full"
+                                className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
                             />
                             {errors.location && (
                                 <span className="text-error text-sm">{errors.location.message}</span>
@@ -131,12 +131,12 @@ const UpdateCamp = () => {
                         {/* Date & Time */}
                         <div className="form-control flex-1">
                             <label className="label">
-                                <span className="label-text font-semibold">Date & Time</span>
+                                <span className="label-text font-semibold dark:text-white">Date & Time</span>
                             </label>
                             <input
                                 type="datetime-local"
                                 {...register("dateTime", { required: "Date & time are required" })}
-                                className="input input-bordered w-full"
+                                className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
                             />
                             {errors.dateTime && (
                                 <span className="text-error text-sm">{errors.dateTime.message}</span>
@@ -147,7 +147,7 @@ const UpdateCamp = () => {
                     {/* Healthcare Professional Name */}
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text font-semibold">Healthcare Professional Name</span>
+                            <span className="label-text font-semibold dark:text-white">Healthcare Professional Name</span>
                         </label>
                         <input
                             type="text"
@@ -155,7 +155,7 @@ const UpdateCamp = () => {
                             {...register("professionalName", {
                                 required: "Healthcare professional name is required",
                             })}
-                            className="input input-bordered w-full"
+                            className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
                         />
                         {errors.professionalName && (
                             <span className="text-error text-sm">{errors.professionalName.message}</span>
@@ -165,12 +165,12 @@ const UpdateCamp = () => {
                     {/* Description */}
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text font-semibold">Description</span>
+                            <span className="label-text font-semibold dark:text-white">Description</span>
                         </label>
                         <textarea
                             placeholder="Enter camp description"
                             {...register("description", { required: "Description is required" })}
-                            className="textarea textarea-bordered w-full"
+                            className="textarea textarea-bordered w-full dark:bg-gray-700 dark:text-white"
                         ></textarea>
                         {errors.description && (
                             <span className="text-error text-sm">{errors.description.message}</span>
@@ -179,7 +179,7 @@ const UpdateCamp = () => {
 
                     {/* Submit Button */}
                     <div className="form-control mt-6">
-                        <button type="submit" className="btn bg-blue-600 text-white w-full">
+                        <button type="submit" className="btn bg-gradient-to-r from-blue-600 to-blue-800 hover:bg-gradient-to-l border-none text-white w-full">
                             Update Camp
                         </button>
                     </div>

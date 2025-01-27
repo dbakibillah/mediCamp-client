@@ -121,7 +121,7 @@ const ManageRegistrations = () => {
     }
 
     return (
-        <section className="container mx-auto px-4 py-10 dark:bg-gray-900">
+        <section className="container mx-auto px-4 py-10">
             <h2 className="text-4xl font-bold text-center mb-6 text-blue-600">Manage Registered Camps</h2>
             <div className="flex justify-end mb-6">
                 <SearchBar onSearch={handleSearch} />

@@ -3,6 +3,11 @@ import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../providers/AuthProviders";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { IoMdAddCircleOutline, IoMdAnalytics } from "react-icons/io";
+import { AiOutlineFileAdd } from "react-icons/ai";
+import { FaHome, FaRegUser, FaUserAlt } from "react-icons/fa";
+import { FaUserPen } from "react-icons/fa6";
+import { MdFeedback, MdManageHistory, MdOutlineFeedback, MdPayments } from "react-icons/md";
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
@@ -38,55 +43,50 @@ const Dashboard = () => {
                 <NavLink
                     to="/dashboard/organizer-profile"
                     className={({ isActive }) =>
-                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
-                        }`
+                        `flex items-center gap-3 px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
                     }
                 >
-                    Organizer Profile
+                    <FaRegUser className="text-xl transition-all" /> Organizer Profile
                 </NavLink>
             </li>
             <li>
                 <NavLink
                     to="/dashboard/add-camp"
                     className={({ isActive }) =>
-                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
-                        }`
+                        `flex items-center gap-3 px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
                     }
                 >
-                    Add A Camp
+                    <IoMdAddCircleOutline className="text-2xl transition-all" /> Add A Camp
                 </NavLink>
             </li>
             <li>
                 <NavLink
                     to="/dashboard/manage-camps"
                     className={({ isActive }) =>
-                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
-                        }`
+                        `flex items-center gap-3 px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
                     }
                 >
-                    Manage Camps
+                    <MdManageHistory className="text-xl transition-all" /> Manage Camps
                 </NavLink>
             </li>
             <li>
                 <NavLink
                     to="/dashboard/manage-registrations"
                     className={({ isActive }) =>
-                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
-                        }`
+                        `flex items-center gap-3 px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
                     }
                 >
-                    Manage Registered Camps
+                    <AiOutlineFileAdd className="text-xl transition-all" /> Manage Registered Camps
                 </NavLink>
             </li>
             <li>
                 <NavLink
                     to="/dashboard/manage-feedbacks"
                     className={({ isActive }) =>
-                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
-                        }`
+                        `flex items-center gap-3 px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
                     }
                 >
-                    Manage Feedbacks
+                    <MdOutlineFeedback className="text-xl transition-all" /> Manage Feedbacks
                 </NavLink>
             </li>
         </>
@@ -98,55 +98,50 @@ const Dashboard = () => {
                 <NavLink
                     to="/dashboard/analytics"
                     className={({ isActive }) =>
-                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
-                        }`
+                        `px-5 py-3 rounded-lg transition-all flex items-center gap-3 ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
                     }
                 >
-                    Analytics
+                    <IoMdAnalytics className="text-xl transition-all" /> Analytics
                 </NavLink>
             </li>
             <li>
                 <NavLink
                     to="/dashboard/participant-profile"
                     className={({ isActive }) =>
-                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
-                        }`
+                        `flex items-center gap-3 px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
                     }
                 >
-                    Participant Profile
+                    <FaUserAlt className="text-lg transition-all" /> Participant Profile
                 </NavLink>
             </li>
             <li>
                 <NavLink
                     to="/dashboard/registered-camps"
                     className={({ isActive }) =>
-                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
-                        }`
+                        `flex items-center gap-3 px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
                     }
                 >
-                    Registered Camps
+                    <FaUserPen className="text-2xl transition-all" /> Registered Camps
                 </NavLink>
             </li>
             <li>
                 <NavLink
                     to="/dashboard/payment-history"
                     className={({ isActive }) =>
-                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
-                        }`
+                        `flex items-center gap-3 px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
                     }
                 >
-                    Payment History
+                    <MdPayments className="text-2xl transition-all" /> Payment History
                 </NavLink>
             </li>
             <li>
                 <NavLink
                     to="/dashboard/your-feedback"
                     className={({ isActive }) =>
-                        `block px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"
-                        }`
+                        `flex items-center gap-3 px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
                     }
                 >
-                    Your Feedback
+                    <MdFeedback className="text-2xl transition-all" /> Your Feedback
                 </NavLink>
             </li>
         </>
@@ -155,9 +150,9 @@ const Dashboard = () => {
     return (
         <section className="bg-gray-100 dark:bg-gray-900 min-h-screen flex flex-col lg:flex-row">
             {/* Sidebar */}
-            <aside className="lg:w-2/12 w-full lg:h-auto h-1/5 bg-blue-600 dark:bg-gray-950 text-white flex flex-col shadow-lg">
+            <aside className="lg:w-2/12 w-full lg:h-auto h-1/5 bg-gradient-to-b from-blue-600 via-indigo-600 to-indigo-800 dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 text-white flex flex-col shadow-lg">
                 <div className="p-6">
-                    <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-gray-100">Dashboard</h2>
                     <nav>
                         <ul className="space-y-2">
                             {userType === "organizer"
@@ -165,22 +160,22 @@ const Dashboard = () => {
                                 : userType === "participant"
                                     ? participantsLinks
                                     : isLoading
-                                        ? <li>Loading...</li>
+                                        ? <li className="text-gray-500">Loading...</li>
                                         : isError
-                                            ? <li>Error loading links</li>
+                                            ? <li className="text-red-500">Error loading links</li>
                                             : null}
                         </ul>
                     </nav>
                     {/* Divider */}
-                    <div className="divider"></div>
+                    <div className="my-6 border-t border-gray-700"></div>
                     <nav>
                         <ul className="space-y-2">
                             <li>
                                 <Link
                                     to="/"
-                                    className="block px-5 py-3 rounded-lg transition-all hover:bg-blue-700"
+                                    className="flex items-center gap-3 px-5 py-3 rounded-lg transition-all hover:bg-blue-700"
                                 >
-                                    Home
+                                    <FaHome className="text-xl transition-all" /> Home
                                 </Link>
                             </li>
                         </ul>
@@ -189,7 +184,7 @@ const Dashboard = () => {
             </aside>
 
             {/* Main Content */}
-            <div className="lg:w-10/12 w-full bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 shadow-lg">
+            <div className="lg:w-10/12 w-full bg-gray-100 dark:bg-gradient-to-br from-gray-800 to-gray-900 text-gray-900 dark:text-gray-100 shadow-lg p-6">
                 <Outlet />
             </div>
         </section>

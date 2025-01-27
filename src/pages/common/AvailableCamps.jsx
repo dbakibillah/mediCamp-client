@@ -42,7 +42,7 @@ const AvailableCamps = () => {
     if (isError) return <p>Error fetching camps. Please try again later.</p>;
 
     return (
-        <div className="container mx-auto lg:px-24 p-4 min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white">
+        <div className="container mx-auto lg:px-24 p-4 min-h-screen text-gray-800 dark:text-white">
             <div className="flex justify-end items-center mb-6 gap-4">
                 <SearchBar onSearch={setSearch} />
                 <select

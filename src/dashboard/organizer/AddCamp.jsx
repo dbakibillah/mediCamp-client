@@ -2,8 +2,11 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProviders";
 
 const AddCamp = () => {
+    const { user } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
     const axiosPublic = useAxiosPublic();
     const img_hosting_key = import.meta.env.VITE_IMG_HOSTING_KEY;
@@ -50,6 +53,8 @@ const AddCamp = () => {
                     ...data,
                     image: imageUrl,
                     participantCount: 0,
+                    addedBy: user.displayName,
+                    organizerEmail: user.email,
                 };
                 delete campData.photo;
 

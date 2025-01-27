@@ -5,7 +5,7 @@ const CampCard = ({ camp }) => {
     const { _id, campName, image, dateTime, location, professionalName, participantCount, description, fees } = camp;
 
     return (
-        <div className="flex flex-col justify-between rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 hover:shadow-xl transition-shadow duration-300">
+        <div className="flex flex-col justify-between rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 dark:shadow-gray-900 hover:shadow-xl transition-shadow duration-300">
             <div>
                 {/* Image */}
                 <img

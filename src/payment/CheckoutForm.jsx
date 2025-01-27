@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProviders";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = ({ totalPrice, campId, campName }) => {
     const stripe = useStripe();
@@ -13,6 +14,7 @@ const CheckoutForm = ({ totalPrice, campId, campName }) => {
     const [loading, setLoading] = useState(false);
     const [clientSecret, setClientSecret] = useState("");
     const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (totalPrice > 0) {
@@ -43,11 +45,8 @@ const CheckoutForm = ({ totalPrice, campId, campName }) => {
             card
         })
         if (error) {
-            console.log('payment error', error);
             setError(error.message);
-        }
-        else {
-            console.log('payment method', paymentMethod)
+        } else {
             setError('');
         }
 
@@ -91,7 +90,16 @@ const CheckoutForm = ({ totalPrice, campId, campName }) => {
                 transactionId: paymentIntent.id,
             });
 
-            Swal.fire("Success", "Payment successful!", "success");
+            Swal.fire({
+                position: "top-middle",
+                icon: "success",
+                title: "Payment Successful",
+                text: `Thank you for your payment!\nYour Transaction ID: ${paymentIntent.id}`,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+
+            navigate("/dashboard/payment-history");
         } catch (err) {
             console.error(err);
         } finally {
@@ -100,36 +108,47 @@ const CheckoutForm = ({ totalPrice, campId, campName }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <CardElement
-                options={{
-                    style: {
-                        base: {
-                            fontSize: "16px",
-                            color: "#333",
-                            "::placeholder": {
-                                color: "#aaa",
+        <form onSubmit={handleSubmit} className="space-y-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+            <h2 className="text-2xl font-semibold text-center text-gray-800 dark:text-gray-100 mb-6">
+                Complete Payment for {campName}
+            </h2>
+
+            <div className="w-full">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Card Details</label>
+                <CardElement
+                    options={{
+                        style: {
+                            base: {
+                                fontSize: "16px",
+                                color: "#26A69A",
+                                borderRadius: "8px",
+                                padding: "12px",
+                                border: "1px solid #ccc",
+                                "::placeholder": {
+                                    color: "#aaa",
+                                },
+                            },
+                            invalid: {
+                                color: "#e63946",
                             },
                         },
-                        invalid: {
-                            color: "#e63946",
-                        },
-                    },
-                }}
-            />
-            {
-                clientSecret && (
-                    <button
-                        type="submit"
-                        className={`btn w-full ${transactionId ? "btn-success" : "btn-primary"}`}
-                        disabled={!stripe || !elements || loading || transactionId}
-                    >
-                        {transactionId ? "Paid" : loading ? "Processing..." : `Pay $${totalPrice}`}
-                    </button>
-                )
-            }
-            {error && <p className="text-red-600">{error}</p>}
-            {transactionId && <p className="text-green-600">Transaction ID: {transactionId}</p>}
+                    }}
+                />
+            </div>
+
+            {clientSecret && (
+                <button
+                    type="submit"
+                    className={`w-full py-3 text-lg font-medium rounded-lg ${transactionId ? "bg-green-600 hover:bg-green-700" : "bg-blue-600 hover:bg-blue-700"
+                        } text-white focus:outline-none`}
+                    disabled={!stripe || !elements || loading || transactionId}
+                >
+                    {transactionId ? "Paid" : loading ? "Processing..." : `Pay $${totalPrice}`}
+                </button>
+            )}
+
+            {error && <p className="text-red-600 mt-3 text-center">{error}</p>}
+            {transactionId && <p className="text-green-600 text-center">Transaction ID: {transactionId}</p>}
         </form>
     );
 };

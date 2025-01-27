@@ -15,7 +15,7 @@ const FeedbackPage = () => {
         queryFn: async () => {
             try {
                 if (user?.email) {
-                    const response = await axiosSecure.get(`/feedback?email=${user.email}`);
+                    const response = await axiosSecure.get(`/feedback/${user.email}`);
                     return response.data;
                 }
             } catch (error) {
@@ -67,9 +67,9 @@ const FeedbackPage = () => {
     }
 
     return (
-        <section className="min-h-screen dark:bg-gray-900 py-12">
+        <section className="min-h-screen py-12">
             <div className="container mx-auto lg:px-24 px-4">
-                <h1 className="text-4xl font-bold text-center text-blue-700 dark:text-blue-300 mb-10">
+                <h1 className="text-4xl font-bold text-center text-blue-700 dark:text-blue-600 mb-10">
                     Your Feedbacks
                 </h1>
                 {feedbacks.length > 0 ? (
@@ -77,7 +77,7 @@ const FeedbackPage = () => {
                         {feedbacks.map((feedback) => (
                             <div
                                 key={feedback._id}
-                                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-transform transform overflow-hidden"
+                                className="bg-white dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-xl transition-transform transform overflow-hidden"
                             >
                                 <div className="p-6">
                                     <div className="flex justify-between items-center mb-4">

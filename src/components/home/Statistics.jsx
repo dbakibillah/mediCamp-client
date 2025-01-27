@@ -34,7 +34,7 @@ const Statistics = () => {
                 (sum, camp) => sum + (camp.participantCount * parseInt(camp.fees)),
                 0
             );
-            
+
             setStats({
                 totalCamps: camps.length,
                 totalParticipants,
@@ -53,7 +53,7 @@ const Statistics = () => {
     }
 
     return (
-        <div className="container mx-auto lg:px-24 p-6 my-20 dark:bg-gray-900 text-gray-800 dark:text-white">
+        <div className="container mx-auto lg:px-24 p-6 my-20 text-gray-800 dark:text-white">
             <h2 className="text-4xl font-bold text-center text-gradient mb-8">
                 Our Impact in Numbers
             </h2>
@@ -61,7 +61,7 @@ const Statistics = () => {
             {/* Stats Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
                 {/* Camps Conducted */}
-                <div className="stats-card bg-gradient-to-r from-blue-500 to-indigo-600 p-6 rounded-lg shadow-lg text-white text-center">
+                <div className="stats-card bg-gradient-to-r from-blue-500 to-indigo-600 p-6 rounded-lg shadow-lg text-white text-center dark:shadow-gray-900">
                     <div className="flex justify-center items-center mb-4">
                         <FaCampground className="text-4xl" />
                     </div>
@@ -70,7 +70,7 @@ const Statistics = () => {
                 </div>
 
                 {/* Participants Served */}
-                <div className="stats-card bg-gradient-to-r from-green-500 to-teal-500 p-6 rounded-lg shadow-lg text-white text-center">
+                <div className="stats-card bg-gradient-to-r from-green-500 to-teal-500 p-6 rounded-lg shadow-lg text-white text-center dark:shadow-gray-900">
                     <div className="flex justify-center items-center mb-4">
                         <FaUsers className="text-4xl" />
                     </div>
@@ -79,7 +79,7 @@ const Statistics = () => {
                 </div>
 
                 {/* Lives Impacted */}
-                <div className="stats-card bg-gradient-to-r from-red-500 to-pink-600 p-6 rounded-lg shadow-lg text-white text-center">
+                <div className="stats-card bg-gradient-to-r from-red-500 to-pink-600 p-6 rounded-lg shadow-lg text-white text-center dark:shadow-gray-900">
                     <div className="flex justify-center items-center mb-4">
                         <FaHeartbeat className="text-4xl" />
                     </div>
@@ -88,7 +88,7 @@ const Statistics = () => {
                 </div>
 
                 {/* Total Fees Collected */}
-                <div className="stats-card bg-gradient-to-r from-purple-500 to-pink-500 p-6 rounded-lg shadow-lg text-white text-center">
+                <div className="stats-card bg-gradient-to-r from-purple-500 to-pink-500 p-6 rounded-lg shadow-lg text-white text-center dark:shadow-gray-900">
                     <div className="flex justify-center items-center mb-4">
                         <FaDollarSign className="text-4xl" />
                     </div>

@@ -51,7 +51,7 @@ const ManageFeedback = () => {
     }
 
     return (
-        <div className="container mx-auto lg:px-24 p-6 dark:bg-gray-900 text-gray-800 dark:text-white">
+        <div className="container mx-auto lg:px-24 p-6 text-gray-800 dark:text-white">
             <h2 className="text-4xl font-bold text-center text-gradient mb-8">
                 Manage Feedback
             </h2>
