@@ -28,7 +28,7 @@ const Login = () => {
                 };
 
                 try {
-                    const response = await axios.get(`http://localhost:5000/user?email=${user.email}`);
+                    const response = await axios.get(`https://medi-camp-server-one.vercel.app/user?email=${user.email}`);
                     if (response.data.exists) {
                         Swal.fire({
                             title: "Welcome back!",
@@ -36,7 +36,7 @@ const Login = () => {
                             icon: "info",
                         });
                     } else {
-                        await axios.post("http://localhost:5000/users", newUser);
+                        await axios.post("https://medi-camp-server-one.vercel.app/users", newUser);
                         Swal.fire({
                             title: "Good job!",
                             text: "Registration successfully with Google!",

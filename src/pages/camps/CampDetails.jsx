@@ -7,6 +7,7 @@ import { AuthContext } from "../../providers/AuthProviders";
 import { ToastContainer, toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const CampDetails = () => {
     const { campId } = useParams();
@@ -18,6 +19,7 @@ const CampDetails = () => {
         emergencyContact: "",
     });
     const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const { user } = useContext(AuthContext);
 
     const { data: camp, isLoading, isError, error, refetch } = useQuery({
@@ -108,7 +110,7 @@ const CampDetails = () => {
                 confirmationStatus: "Pending",
             };
 
-            await axiosPublic.post("/joinedParticipant", registrationData);
+            await axiosSecure.post("/joinedParticipant", registrationData);
             await axiosPublic.patch(`/camps/${campId}/increment`);
 
             Swal.fire({

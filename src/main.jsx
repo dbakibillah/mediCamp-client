@@ -32,12 +32,14 @@ import YourFeedbacks from './dashboard/participant/YourFeedbacks';
 import AvailableCamps from './pages/common/AvailableCamps';
 import ManageFeedback from './dashboard/organizer/ManageFeedback';
 import PrivateRoute from './routes/PrivateRoute';
+import ErrorPage from './pages/common/ErrorPage';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -64,7 +66,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
-    // errorElement: <div>Error</div>,
+    errorElement: <ErrorPage />,
     children: [
       // Organizer's routes
       {
