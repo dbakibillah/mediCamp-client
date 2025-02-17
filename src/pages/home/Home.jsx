@@ -4,6 +4,8 @@ import PopularCamps from "../../components/home/PopularCamps";
 import FeedbackRating from "../../components/home/FeedbackRating";
 import UpcomingEvents from "../../components/home/UpcomingEvents";
 import Statistics from "../../components/home/Statistics";
+import Newsletter from "../../components/home/Newsletter";
+import FAQSection from "../../components/home/FAQSection";
 const Home = () => {
     return (
         <section>
@@ -15,6 +17,8 @@ const Home = () => {
             <Statistics />
             <FeedbackRating />
             <UpcomingEvents />
+            <FAQSection />
+            <Newsletter />
         </section>
     );
 };
