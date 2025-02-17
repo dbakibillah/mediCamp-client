@@ -65,7 +65,7 @@ const AvailableCamps = () => {
 
             {/* Camps Display Section */}
             <div
-                className={`grid gap-6 ${layout === "three" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"}`}
+                className={`grid gap-4 ${layout === "three" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" : "grid-cols-1 sm:grid-cols-3"}`}
             >
                 {sortedCamps.map((camp) => (
                     <CampCard key={camp._id} camp={camp} />
