@@ -6,6 +6,7 @@ import UpcomingEvents from "../../components/home/UpcomingEvents";
 import Statistics from "../../components/home/Statistics";
 import Newsletter from "../../components/home/Newsletter";
 import FAQSection from "../../components/home/FAQSection";
+import ServicesSection from "../../components/home/ServicesSection";
 const Home = () => {
     return (
         <section>
@@ -14,6 +15,7 @@ const Home = () => {
             </Helmet>
             <Banner />
             <PopularCamps />
+            <ServicesSection />
             <Statistics />
             <FeedbackRating />
             <UpcomingEvents />

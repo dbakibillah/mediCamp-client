@@ -33,6 +33,7 @@ import AvailableCamps from './pages/common/AvailableCamps';
 import ManageFeedback from './dashboard/organizer/ManageFeedback';
 import PrivateRoute from './routes/PrivateRoute';
 import ErrorPage from './pages/common/ErrorPage';
+import AboutUs from './pages/common/AboutUs';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/about",
+        element: <AboutUs />,
       },
       {
         path: "/login",
