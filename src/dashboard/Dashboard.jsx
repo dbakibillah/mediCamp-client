@@ -31,7 +31,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (userType === "organizer") {
-            navigate("/dashboard/organizer-profile");
+            navigate("/dashboard/organizer-dashboard");
         } else if (userType === "participant") {
             navigate("/dashboard/analytics");
         }
@@ -39,6 +39,16 @@ const Dashboard = () => {
 
     const organizerLinks = (
         <>
+            <li>
+                <NavLink
+                    to="/dashboard/organizer-dashboard"
+                    className={({ isActive }) =>
+                        `flex items-center gap-3 px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
+                    }
+                >
+                    <FaRegUser className="text-xl transition-all" /> Dashboard
+                </NavLink>
+            </li>
             <li>
                 <NavLink
                     to="/dashboard/organizer-profile"

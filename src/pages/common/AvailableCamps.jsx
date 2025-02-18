@@ -38,8 +38,8 @@ const AvailableCamps = () => {
 
     const toggleLayout = () => setLayout(layout === "three" ? "two" : "three");
 
-    if (isLoading) return <p>Loading camps...</p>;
-    if (isError) return <p>Error fetching camps. Please try again later.</p>;
+    if (isLoading) return <p className="text-center min-h-screen dark:text-white">Loading camps...</p>;
+    if (isError) return <p className="text-center min-h-screen dark:text-white">Error fetching camps. Please try again later.</p>;
 
     return (
         <div className="container mx-auto lg:px-24 p-4 min-h-screen text-gray-800 dark:text-white">

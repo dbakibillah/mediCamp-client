@@ -34,7 +34,6 @@ const OrganizerProfile = () => {
     if (isLoading) return <p className="text-center text-lg">Loading...</p>;
     if (isError) return <p className="text-center text-lg text-red-500">Error fetching user data.</p>;
 
-    // Handle input change
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProfileData((prev) => ({
@@ -43,7 +42,6 @@ const OrganizerProfile = () => {
         }));
     };
 
-    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -74,19 +72,20 @@ const OrganizerProfile = () => {
     };
 
     return (
-        <section className="container mx-auto lg:px-24 p-6">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-8 text-gray-800 dark:text-gray-100">Organizer Profile</h2>
+        <section className="container mx-auto p-6 lg:px-24">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-8 text-gray-800 dark:text-gray-100 text-center">Organizer Profile</h2>
 
-            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
-                <figure className="lg:w-1/6 flex justify-center">
-                    <img
-                        src={profileData.photoURL}
-                        alt="Profile"
-                        className="w-56 h-56 rounded-full object-cover border-4 border-gray-300 shadow-lg"
-                    />
-                </figure>
+            <div className="flex justify-center">
+                <div className="flex flex-col gap-6 p-8 lg:w-3/6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+                    <figure className="flex justify-center mb-4">
+                        <img
+                            src={profileData.photoURL}
+                            alt="Profile"
+                            className="w-56 h-56 rounded-full object-cover border-4 border-gray-300 shadow-lg"
+                        />
+                    </figure>
+                    <p className="text-lg text-gray-600 dark:text-gray-300 text-center"><span className="text-white px-3 py-1 rounded-full bg-gradient-to-r from-gray-950 to-gray-800">{userData?.type || "N/A"}</span></p>
 
-                <div className="flex flex-col gap-6 p-6 lg:w-3/6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
                     {!isEditing ? (
                         <div className="lg:w-full space-y-3">
                             <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">Name: {profileData.name}</h2>
@@ -100,48 +99,49 @@ const OrganizerProfile = () => {
                             </button>
                         </div>
                     ) : (
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
                                 <input
                                     type="text"
                                     name="name"
                                     value={profileData.name}
                                     onChange={handleChange}
-                                    className="w-full p-3 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-4 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Photo URL</label>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Photo URL</label>
                                 <input
                                     type="text"
                                     name="photoURL"
                                     value={profileData.photoURL}
                                     onChange={handleChange}
-                                    className="w-full p-3 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-4 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Contact</label>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Contact</label>
                                 <input
                                     type="text"
                                     name="contact"
                                     value={profileData.contact}
                                     onChange={handleChange}
-                                    className="w-full p-3 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-4 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
+
                             <div className="flex gap-4 mt-6">
                                 <button
                                     type="submit"
-                                    className="btn bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:bg-gradient-to-l transition-all ease-in-out duration-300 border-none"
+                                    className="btn bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:bg-gradient-to-l transition-all ease-in-out duration-300"
                                 >
                                     Save Changes
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => setIsEditing(false)}
-                                    className="btn bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg hover:bg-gradient-to-l transition-all ease-in-out duration-300 border-none"
+                                    className="btn bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg hover:bg-gradient-to-l transition-all ease-in-out duration-300"
                                 >
                                     Cancel
                                 </button>

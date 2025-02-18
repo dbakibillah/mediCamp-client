@@ -34,6 +34,7 @@ import ManageFeedback from './dashboard/organizer/ManageFeedback';
 import PrivateRoute from './routes/PrivateRoute';
 import ErrorPage from './pages/common/ErrorPage';
 import AboutUs from './pages/common/AboutUs';
+import OrganizerDashboard from './dashboard/organizer/OrganizerDashboard';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/organizer-profile",
         element: <OrganizerProfile />,
+      },
+      {
+        path: "/dashboard/organizer-dashboard",
+        element: <OrganizerDashboard />,
       },
       {
         path: "/dashboard/add-camp",
