@@ -35,6 +35,9 @@ const Navbar = () => {
         <>
             <li><NavLink to="/" className="text-black dark:text-gray-200">Home</NavLink></li>
             <li><NavLink to="/available-camps" className="text-black dark:text-gray-200">Available Camps</NavLink></li>
+            {
+                user && <li><NavLink to="/feedbacks" className="text-black dark:text-gray-200">Users Feedback</NavLink></li>
+            }
             <li><NavLink to="/about" className="text-black dark:text-gray-200">About Us</NavLink></li>
         </>
     );

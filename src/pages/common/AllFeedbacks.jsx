@@ -14,7 +14,7 @@ const AllFeedbacks = () => {
     });
 
     return (
-        <section className="container mx-auto lg:px-24 min-h-screen py-12">
+        <section className="container mx-auto lg:px-24 p-2 min-h-screen py-12">
             {isLoading && (
                 <div className="flex justify-center items-center h-full">
                     <p className="text-lg text-gray-600">Loading feedbacks...</p>
