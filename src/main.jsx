@@ -35,6 +35,7 @@ import PrivateRoute from './routes/PrivateRoute';
 import ErrorPage from './pages/common/ErrorPage';
 import AboutUs from './pages/common/AboutUs';
 import OrganizerDashboard from './dashboard/organizer/OrganizerDashboard';
+import AllFeedbacks from './pages/common/AllFeedbacks';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <AboutUs />,
+      },
+      {
+        path: "/feedbacks",
+        element: <AllFeedbacks />,
       },
       {
         path: "/login",

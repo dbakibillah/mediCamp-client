@@ -8,6 +8,7 @@ import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaHome, FaRegUser, FaUserAlt } from "react-icons/fa";
 import { FaUserPen } from "react-icons/fa6";
 import { MdFeedback, MdManageHistory, MdOutlineFeedback, MdPayments } from "react-icons/md";
+import { RxDashboard } from "react-icons/rx";
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
@@ -46,7 +47,7 @@ const Dashboard = () => {
                         `flex items-center gap-3 px-5 py-3 rounded-lg transition-all ${isActive ? "bg-blue-800 font-semibold" : "hover:bg-blue-700"}`
                     }
                 >
-                    <FaRegUser className="text-xl transition-all" /> Dashboard
+                    <RxDashboard className="text-xl transition-all" /> Dashboard
                 </NavLink>
             </li>
             <li>
